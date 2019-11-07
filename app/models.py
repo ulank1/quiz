@@ -39,8 +39,8 @@ class Test(models.Model):
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
     category = models.ForeignKey('Category', verbose_name='Категория', related_name='test',
                                  on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name='название')
-    desc = models.CharField(max_length=100, null=True, blank=True, verbose_name='описание')
+    name = models.CharField(max_length=1000, null=True, blank=True, verbose_name='название')
+    desc = models.CharField(max_length=1000, null=True, blank=True, verbose_name='описание')
 
 
 class Quiz(models.Model):
@@ -50,12 +50,12 @@ class Quiz(models.Model):
 
     test = models.ForeignKey('Test', verbose_name='Тест', related_name='test',
                              on_delete=models.CASCADE)
-    question = models.CharField(max_length=2000, null=True, blank=True, verbose_name='вопрос')
-    answer_a = models.CharField(max_length=2000, null=True, blank=True, verbose_name='ответ_а')
-    answer_b = models.CharField(max_length=2000, null=True, blank=True, verbose_name='ответ_б')
-    answer_c = models.CharField(max_length=2000, null=True, blank=True, verbose_name='ответ_в')
-    answer_d = models.CharField(max_length=2000, null=True, blank=True, verbose_name='ответ_г')
-    answer_e = models.CharField(max_length=2000, null=True, blank=True, verbose_name='ответ_д')
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(max_length=2000, null=True, blank=True, verbose_name='ответ_д')
     true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
     duration = models.IntegerField(null=True, blank=True, verbose_name='время одного вопроса')
 
@@ -85,8 +85,8 @@ class MainCategory(models.Model):
         verbose_name_plural = 'Главные Категории'
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name='название')
-    desc = models.CharField(max_length=100, null=True, blank=True, verbose_name='описание')
+    name = models.CharField(max_length=1000, null=True, blank=True, verbose_name='название')
+    desc = models.CharField(max_length=1000, null=True, blank=True, verbose_name='описание')
     image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='логотип')
 
     def __str__(self):
@@ -101,8 +101,8 @@ class Category(models.Model):
     main_category = models.ForeignKey(MainCategory, verbose_name='главная категория', related_name='category',
                                       on_delete=models.CASCADE)
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name='название')
-    desc = models.CharField(max_length=100, null=True, blank=True, verbose_name='описание')
+    name = models.CharField(max_length=1000, null=True, blank=True, verbose_name='название')
+    desc = models.CharField(max_length=1000, null=True, blank=True, verbose_name='описание')
 
     def __str__(self):
         return self.name
@@ -116,8 +116,8 @@ class Info(models.Model):
     main_category = models.ForeignKey(MainCategory, verbose_name='главная категория', related_name='info',
                                       on_delete=models.CASCADE)
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=200, verbose_name='Название')
-    desc = models.CharField(max_length=1000, verbose_name='Информация')
+    name = models.TextField(verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
 
     def __str__(self):
         return self.main_category.name
@@ -129,8 +129,8 @@ class University(models.Model):
         verbose_name_plural = 'Вузы'
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=200, verbose_name='Название')
-    desc = models.CharField(max_length=1000, verbose_name='Информация')
+    name = models.CharField(max_length=1000, verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
     avatar = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='логотип')
 
     def __str__(self):
@@ -144,8 +144,8 @@ class UniversitySubCategory(models.Model):
 
     university = models.ForeignKey(University, verbose_name='Универ', related_name='info',
                                    on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, verbose_name='Название')
-    desc = models.CharField(max_length=1000, verbose_name='Информация')
+    name = models.CharField(max_length=1000, verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
 
     def __str__(self):
         return self.name
@@ -157,7 +157,7 @@ class ORT(models.Model):
         verbose_name_plural = 'Подготовка к ОРТ'
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=200, verbose_name='Название')
+    name = models.CharField(max_length=1000, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -170,8 +170,8 @@ class ORTDesc(models.Model):
 
     ort = models.ForeignKey(ORT, verbose_name='Орт', related_name='info',
                             on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, verbose_name='Название')
-    desc = models.CharField(max_length=1000, verbose_name='Информация')
+    name = models.CharField(max_length=1000, verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
 
     def __str__(self):
         return self.name
@@ -183,8 +183,8 @@ class News(models.Model):
         verbose_name_plural = 'Новости'
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    name = models.CharField(max_length=200, verbose_name='Название')
-    desc = models.CharField(max_length=1000, verbose_name='Информация')
+    name = models.CharField(max_length=1000, verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
     created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
 
     def __str__(self):
@@ -217,7 +217,7 @@ class Notification(models.Model):
                              on_delete=models.CASCADE, null=True, blank=True)
     is_view = models.BooleanField(default=False, null=True, blank=True)
     title = models.CharField(max_length=300, null=True, blank=True)
-    body = models.CharField(max_length=500, null=True, blank=True)
+    body = models.CharField(max_length=5000, null=True, blank=True)
 
 
 class Game(models.Model):
@@ -241,11 +241,11 @@ class GameQuiz(models.Model):
     test = models.ForeignKey('Game', verbose_name='Тест', related_name='game',
                              on_delete=models.CASCADE)
     question = models.TextField(null=True, blank=True, verbose_name='вопрос')
-    answer_a = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_а')
-    answer_b = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_б')
-    answer_c = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_в')
-    answer_d = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_г')
-    answer_e = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_д')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
     true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
     duration = models.IntegerField(null=True, blank=True, verbose_name='время одного вопроса')
 
@@ -260,12 +260,12 @@ class DayQuiz(models.Model):
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
     question = models.TextField(null=True, blank=True, verbose_name='вопрос')
-    answer_a = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_а')
-    answer_b = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_б')
-    answer_c = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_в')
-    answer_d = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_г')
-    answer_e = models.CharField(max_length=200, null=True, blank=True, verbose_name='ответ_д')
-    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.TextField(max_length=1, verbose_name="правильный ответ")
     date = models.DateField(verbose_name='дата')
     duration = models.IntegerField(null=True, blank=True, verbose_name='время одного вопроса')
 
@@ -278,7 +278,7 @@ class GameQuizGame(models.Model):
         verbose_name = 'Тест для Дуэли'
         verbose_name_plural = 'Тесты для Дуэли'
 
-    quiz = models.CharField(max_length=100)
+    quiz = models.CharField(max_length=500)
 
     user_owner = models.ForeignKey('Users', verbose_name='Тот Кто отправил', related_name='user_owner',
                                    on_delete=models.CASCADE)
