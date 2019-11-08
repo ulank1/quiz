@@ -22,6 +22,7 @@ class Users(models.Model):
     avatar = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='аватар')
     birth_date = models.DateField(null=True, blank=True, verbose_name="дата рождения")
     place = models.CharField(null=True, blank=True, verbose_name="место проживания", max_length=100)
+    duel_time = models.DateTimeField(auto_now=True, null=True)
     is_kg = models.BooleanField(null=True, blank=True, default=False)
     is_ru = models.BooleanField(null=True, blank=True, default=False)
 
@@ -295,9 +296,13 @@ class GameQuizGame(models.Model):
         super().save()
         if self.outer_point == -1:
             user = self.user_outer
+            user1 = self.user_owner
             body = "Вам бросил(а) вызов: " + self.user_owner.name
+            user1.save()
         elif self.outer_point > -1:
             user = self.user_owner
+            user1 = self.user_outer
+            user1.save()
             if self.outer_point > self.owner_point:
                 body = "Вы проиграли: " + self.user_outer.name
             elif self.outer_point < self.owner_point:

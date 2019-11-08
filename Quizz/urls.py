@@ -48,6 +48,7 @@ urlpatterns = [
                   path('api/v1/', include(router.urls)),
                   path('api/v1/game_quiz/', views.game_quiz_list),
                   path('api/v1/rating_al/', RatingAll.as_view()),
+                  path('api/v1/is_exist/', IsUserExist.as_view()),
                   path('api/v1/game_all/', GameInviteAll.as_view()),
                   path('api/v1/game_invite/', GameAll.as_view()),
                   path('api/v1/notification_count/', NotificationCount.as_view()),

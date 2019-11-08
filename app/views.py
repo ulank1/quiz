@@ -27,7 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Users.objects.all().order_by('-name')
+    queryset = Users.objects.all().order_by('-duel_time')
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
@@ -348,3 +348,26 @@ class NotificationCount(APIView):
                     s = s + 1
 
             return Response({"size": s})
+
+
+class IsUserExist(APIView):
+
+    def get(self, request):
+        global b
+        if request.method == 'GET':
+            login = request.GET.get('login')
+            name = request.GET.get('name')
+
+            b = True
+
+            user = Users.objects.filter(login=login)
+
+            if len(user) > 0:
+                b = False
+
+            user1 = Users.objects.filter(name=name)
+
+            if len(user1) > 0:
+                b = False
+
+        return Response({"success": b})
