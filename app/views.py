@@ -279,7 +279,7 @@ class GameInviteAll(APIView):
             for out in outer:
                 true_game.append(out)
 
-            return JsonResponse(GameQuizGameSerializerGandon(game, many=True).data, safe=False)
+            return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
 
 
 class GameAll(APIView):
