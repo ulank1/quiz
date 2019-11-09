@@ -219,6 +219,7 @@ class Notification(models.Model):
     is_view = models.BooleanField(default=False, null=True, blank=True)
     title = models.CharField(max_length=300, null=True, blank=True)
     body = models.CharField(max_length=5000, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
 
 class Game(models.Model):

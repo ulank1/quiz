@@ -279,6 +279,8 @@ class GameInviteAll(APIView):
             for out in outer:
                 true_game.append(out)
 
+            true_game.sort(key=id, reverse=True)
+
             return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
 
 
