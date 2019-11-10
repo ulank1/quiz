@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 
 # Create your models here.
@@ -87,7 +88,7 @@ class MainCategory(models.Model):
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
     name = models.CharField(max_length=1000, null=True, blank=True, verbose_name='название')
-    desc = models.CharField(max_length=1000, null=True, blank=True, verbose_name='описание')
+    desc = models.TextField(null=True, blank=True, verbose_name='описание')
     image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='логотип')
 
     def __str__(self):

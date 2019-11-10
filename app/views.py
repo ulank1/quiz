@@ -1,6 +1,7 @@
 from datetime import datetime
 from random import randrange
 
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
@@ -61,7 +62,7 @@ class RatingViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Rating.objects.order_by('-created_at')
+    queryset = Rating.objects.order_by('created_at')
     serializer_class = RatingSerializer
     filter_backends = [DjangoFilterBackend]
 
@@ -270,16 +271,9 @@ class GameInviteAll(APIView):
 
             game = GameQuizGame.objects.order_by('-id')
 
-            owner = game.filter(user_owner=user_id)
-            for onw in owner:
+            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))
+            for onw in owner.order_by('-id'):
                 true_game.append(onw)
-
-            outer = game.filter(user_outer=user_id)
-
-            for out in outer:
-                true_game.append(out)
-
-            true_game.sort(key=id, reverse=True)
 
             return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
 

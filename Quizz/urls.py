@@ -54,6 +54,8 @@ urlpatterns = [
                   path('api/v1/notification_count/', NotificationCount.as_view()),
                   path('api/v1/game_quiz_outer/', views.game_quiz_list_outer),
                   path('api/v1/device', FCMDeviceCreateView.as_view({'post': 'create'})),
+                  url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+
                   # path('api/v1/rating_add/', views.set_rating),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
