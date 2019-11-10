@@ -109,7 +109,17 @@ class QuizAdmin(CompactInline):
     extra = 1
 
 
+class TestAdminForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        widgets = {
+            'desc': SummernoteWidget(),
+        }
+        fields = '__all__'
+
+
 class TestAdmin(admin.ModelAdmin):
+    form = TestAdminForm
     class Meta:
         model = Test
 

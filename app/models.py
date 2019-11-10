@@ -41,7 +41,7 @@ class Test(models.Model):
     category = models.ForeignKey('Category', verbose_name='Категория', related_name='test',
                                  on_delete=models.CASCADE)
     name = models.CharField(max_length=1000, null=True, blank=True, verbose_name='название')
-    desc = models.CharField(max_length=1000, null=True, blank=True, verbose_name='описание')
+    desc = models.TextField(null=True, blank=True, verbose_name='описание')
 
 
 class Quiz(models.Model):
