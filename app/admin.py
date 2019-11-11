@@ -120,10 +120,11 @@ class TestAdminForm(forms.ModelForm):
 
 class TestAdmin(admin.ModelAdmin):
     form = TestAdminForm
+    ordering = ['-name']
+    list_filter = ['category', ]
 
     class Meta:
         model = Test
-        ordering = ['pk']
 
     list_display = ("name", "display_category_name")
 
