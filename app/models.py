@@ -56,7 +56,7 @@ class Quiz(models.Model):
     answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
     answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
     answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
-    answer_e = models.TextField(max_length=2000, null=True, blank=True, verbose_name='ответ_д')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
     true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
     duration = models.IntegerField(null=True, blank=True, verbose_name='время одного вопроса')
 

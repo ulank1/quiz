@@ -120,10 +120,17 @@ class TestAdminForm(forms.ModelForm):
 
 class TestAdmin(admin.ModelAdmin):
     form = TestAdminForm
+
     class Meta:
         model = Test
+        ordering = ['pk']
+
+    list_display = ("name", "display_category_name")
 
     inlines = [QuizAdmin]
+
+    def display_category_name(self, obj):
+        return obj.category.name
 
 
 admin.site.register(Test, TestAdmin)
@@ -197,4 +204,3 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(News, NewsAdmin)
-
