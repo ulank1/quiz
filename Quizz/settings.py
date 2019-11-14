@@ -116,6 +116,41 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    # Or, you can set it as False to use SummernoteInplaceWidget by default - no iframe mode
+    # In this case, you have to load Bootstrap/jQuery stuff by manually.
+    # Use this when you're already using Bootstraip/jQuery based themes.
+    # 'iframe': False,
+
+    # You can put custom Summernote settings
+    'summernote': {
+        # As an example, using Summernote Air-mode
+        'airMode': False,
+
+        # Change editor size
+        'width': '100%',
+        'height': '200',
+
+        # Use proper language setting automatically (default)
+        'lang': None,
+
+
+
+        # You can also add custom settings for external plugins
+        'print': {
+            'stylesheetUrl': '/some_static_folder/printable.css',
+        },
+        'codemirror': {
+            'mode': 'htmlmixed',
+            'lineNumbers': 'true',
+            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+            'theme': 'monokai',
+        },
+    },
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -137,4 +172,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
