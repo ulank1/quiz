@@ -150,18 +150,37 @@ def game_quiz_list(request):
     """
     List all code snippets, or create a new snippet.
     """
+    global r
     if request.method == 'GET':
         test = request.GET.get("test")
         # snippets = [user for user in User.objects.all() if user.phone == 'qweqwrqwe']
         snippets = GameQuiz.objects.filter(test=test)
         true_snippets = []
 
+        indexes = [] = {-1, 2}
+
         for x in range(0, 3):
-            true_snippets.append(snippets[randrange(len(snippets))])
+            b = True
+            while b:
+                r = randrange(len(snippets))
+
+                b = False
+
+                for ig in indexes:
+                    if r == ig:
+                        b = True
+
+                if not b:
+                    indexes.add(r)
+
+            true_snippets.append(snippets[r])
 
         serializer = GameQuizSerializer(true_snippets, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+
+def get_random1(size):
+    return randrange(size)
 
 def game_quiz_list_outer(request):
     """

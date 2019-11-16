@@ -152,17 +152,17 @@ class GameQuizAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class GameQuizAdmin(StackedInline):
+class GameQuizAdmin(admin.ModelAdmin):
     form = GameQuizAdminForm
     model = GameQuiz
-    extra = 1
+
+
+admin.site.register(GameQuiz, GameQuizAdmin)
 
 
 class GameTestAdmin(admin.ModelAdmin):
     class Meta:
         model = Game
-
-    inlines = [GameQuizAdmin]
 
 
 admin.site.register(Game, GameTestAdmin)

@@ -276,9 +276,6 @@ class DayQuiz(models.Model):
 
 
 class GameQuizGame(models.Model):
-    class Meta:
-        verbose_name = 'Тест для Дуэли'
-        verbose_name_plural = 'Тесты для Дуэли'
 
     quiz = models.CharField(max_length=500)
     category = models.CharField(max_length=500,null=True,blank=True)
