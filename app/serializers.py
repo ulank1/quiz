@@ -44,6 +44,12 @@ class GameSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class QuoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quote
+        fields = '__all__'
+
+
 class GameQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameQuiz

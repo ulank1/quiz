@@ -332,3 +332,8 @@ class Device(FCMDevice):
         on_delete=models.CASCADE,
         related_name='device'
     )
+
+
+class Quote(models.Model):
+    quote = models.CharField(max_length=1000,null=True,blank=True)
+

@@ -14,6 +14,7 @@ admin.site.register(Rating)
 admin.site.register(GameQuizGame)
 admin.site.register(Notification)
 admin.site.register(Device)
+admin.site.register(Quote)
 
 
 class InfoAdminForm(forms.ModelForm):

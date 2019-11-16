@@ -278,6 +278,46 @@ class GameInviteAll(APIView):
             return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
 
 
+class Category1(APIView):
+
+    def get(self, request):
+        if request.method == 'GET':
+            lang = request.GET.get('lang')
+
+            true_game = []
+
+            game = Category.objects.all()
+
+            owner = game.filter(Q(lang=lang) | Q(lang__isnull=True))
+
+            return JsonResponse(CategorySerializer(owner, many=True).data, safe=False)
+
+
+class Game1(APIView):
+
+    def get(self, request):
+        if request.method == 'GET':
+            lang = request.GET.get('lang')
+
+            true_game = []
+
+            game = Game.objects.all()
+
+            owner = game.filter(Q(lang=lang) | Q(lang__isnull=True))
+
+            return JsonResponse(GameSerializer(owner, many=True).data, safe=False)
+
+
+class QuoteG(APIView):
+    def get(self, request):
+        if request.method == 'GET':
+
+            snippets = Quote.objects.all()
+
+            serializer = GameQuizSerializer(snippets[randrange(len(snippets))], many=False)
+            return JsonResponse(serializer.data, safe=False)
+
+
 class GameAll(APIView):
 
     def get(self, request):
@@ -314,7 +354,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Notification.objects.all()
+    queryset = Notification.objects.order_by('-created_at')
     serializer_class = NotificationSerializer
     filter_backends = [DjangoFilterBackend]
 
