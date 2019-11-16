@@ -281,6 +281,7 @@ class GameQuizGame(models.Model):
         verbose_name_plural = 'Тесты для Дуэли'
 
     quiz = models.CharField(max_length=500)
+    category = models.CharField(max_length=500,null=True,blank=True)
 
     user_owner = models.ForeignKey('Users', verbose_name='Тот Кто отправил', related_name='user_owner',
                                    on_delete=models.CASCADE)
@@ -335,5 +336,5 @@ class Device(FCMDevice):
 
 
 class Quote(models.Model):
-    quote = models.CharField(max_length=1000,null=True,blank=True)
+    quote = models.TextField(max_length=1000,null=True,blank=True)
 
