@@ -40,7 +40,7 @@ class TestViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Test.objects.all().order_by('-name')
+    queryset = Test.objects.all().order_by('name')
     serializer_class = TestSerializer
     filter_backends = [DjangoFilterBackend]
 
@@ -314,7 +314,7 @@ class QuoteG(APIView):
 
             snippets = Quote.objects.all()
 
-            serializer = GameQuizSerializer(snippets[randrange(len(snippets))], many=False)
+            serializer = QuoteSerializer(snippets[randrange(len(snippets))], many=False)
             return JsonResponse(serializer.data, safe=False)
 
 
