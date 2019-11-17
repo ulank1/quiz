@@ -179,15 +179,17 @@ class OrtDescAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ORTDescAdmin(CompactInline):
+class ORTDescAdmin(admin.ModelAdmin):
     form = OrtDescAdminForm
     model = ORTDesc
-    extra = 1
+
+
+admin.site.register(ORTDesc, ORTDescAdmin)
 
 
 class OrtAdmin(admin.ModelAdmin):
     model = ORT
-    inlines = [ORTDescAdmin]
+    # inlines = [ORTDescAdmin]
 
 
 admin.site.register(ORT, OrtAdmin)
