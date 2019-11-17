@@ -157,7 +157,7 @@ def game_quiz_list(request):
         snippets = GameQuiz.objects.filter(test=test)
         true_snippets = []
 
-        indexes = [] = {-1, 2}
+        indexes = []
 
         for x in range(0, 3):
             b = True
@@ -171,7 +171,7 @@ def game_quiz_list(request):
                         b = True
 
                 if not b:
-                    indexes.add(r)
+                    indexes.append(r)
 
             true_snippets.append(snippets[r])
 

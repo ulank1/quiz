@@ -4,6 +4,7 @@ from django.contrib import admin
 from django import forms
 from django.contrib.admin import StackedInline
 from django_summernote.widgets import SummernoteWidget
+from jet.admin import CompactInline
 
 from app.models import *
 
@@ -15,6 +16,7 @@ admin.site.register(GameQuizGame)
 admin.site.register(Notification)
 admin.site.register(Device)
 admin.site.register(Quote)
+admin.site.register(MyNotif)
 
 
 class InfoAdminForm(forms.ModelForm):
@@ -43,7 +45,7 @@ class UniversitySubCategoryAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class UniversitySubcategoryAdmin(StackedInline):
+class UniversitySubcategoryAdmin(CompactInline):
     form = UniversitySubCategoryAdminForm
     model = UniversitySubCategory
     extra = 1
@@ -104,7 +106,7 @@ class PostAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class QuizAdmin(StackedInline):
+class QuizAdmin(CompactInline):
     form = PostAdminForm
     model = Quiz
     extra = 1
@@ -177,7 +179,7 @@ class OrtDescAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ORTDescAdmin(StackedInline):
+class ORTDescAdmin(CompactInline):
     form = OrtDescAdminForm
     model = ORTDesc
     extra = 1

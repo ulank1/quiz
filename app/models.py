@@ -25,6 +25,7 @@ class Users(models.Model):
     duel_time = models.DateTimeField(auto_now=True, null=True)
     is_kg = models.BooleanField(null=True, blank=True, default=False)
     is_ru = models.BooleanField(null=True, blank=True, default=False)
+    is_notification = models.BooleanField(null=True, blank=True, default=True)
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
 
@@ -198,13 +199,14 @@ class News(models.Model):
 
         for user in users:
             Notification(news=self, user=user, title="Новости/Жанылык", body=self.name).save()
+            if user.is_notification is None or user.is_notification is True:
 
-        Device.objects.all().send_message(
-            api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
-            data={
-                'title': "Новости/Жанылык",
-                'body': self.name
-            })
+                Device.objects.filter(users=user).send_message(
+                    api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
+                    data={
+                        'title': "Новости/Жанылык",
+                        'body': self.name
+                    })
 
 
 class Notification(models.Model):
@@ -297,11 +299,10 @@ class GameQuizGame(models.Model):
             user = self.user_outer
             user1 = self.user_owner
             body = "Вам бросил(а) вызов: " + self.user_owner.name
-            user1.save()
+
         elif self.outer_point > -1:
             user = self.user_owner
             user1 = self.user_outer
-            user1.save()
             if self.outer_point > self.owner_point:
                 body = "Вы проиграли: " + self.user_outer.name
             elif self.outer_point < self.owner_point:
@@ -310,12 +311,13 @@ class GameQuizGame(models.Model):
                 body = "У вас ничья с: " + self.user_outer.name
 
         Notification(game=self, user=user, title="Дуэль", body=body).save()
-        Device.objects.all().send_message(
-            api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
-            data={
-                'title': "Дуэль",
-                'body': body
-            })
+        if user.is_notification is None or user.is_notification is True:
+            Device.objects.filter(users=user).send_message(
+                api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
+                data={
+                    'title': "Дуэль",
+                    'body': body
+                })
 
 
 class QuizCount(models.Model):
@@ -334,4 +336,29 @@ class Device(FCMDevice):
 
 class Quote(models.Model):
     quote = models.TextField(max_length=1000,null=True,blank=True)
+
+
+class MyNotif(models.Model):
+    class Meta:
+        verbose_name = 'Уведомление'
+        verbose_name_plural = 'Уведомления'
+
+    name = models.CharField(max_length=1000, verbose_name='Название')
+    desc = models.TextField(verbose_name='Информация')
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save()
+        users = Users.objects.all()
+
+        Device.objects.all().send_message(
+            api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
+            data={
+                'title': self.name,
+                'body': self.desc
+            })
 
