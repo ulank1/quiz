@@ -157,6 +157,7 @@ class GameQuizAdminForm(forms.ModelForm):
 class GameQuizAdmin(admin.ModelAdmin):
     form = GameQuizAdminForm
     model = GameQuiz
+    search_fields = ('question',)
 
 
 admin.site.register(GameQuiz, GameQuizAdmin)

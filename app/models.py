@@ -167,8 +167,8 @@ class ORT(models.Model):
 
 class ORTDesc(models.Model):
     class Meta:
-        verbose_name = 'описание'
-        verbose_name_plural = 'описание'
+        verbose_name = 'Подготовка к ОРТ описание'
+        verbose_name_plural = 'Подготовка к ОРТ описание'
 
     ort = models.ForeignKey(ORT, verbose_name='Орт', related_name='info',
                             on_delete=models.CASCADE)
@@ -198,13 +198,13 @@ class News(models.Model):
         users = Users.objects.all()
 
         for user in users:
-            Notification(news=self, user=user, title="Новости/Жанылык", body=self.name).save()
+            Notification(news=self, user=user, title="Новости/Жаңылыктар", body=self.name).save()
             if user.is_notification is None or user.is_notification is True:
 
                 Device.objects.filter(users=user).send_message(
                     api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
                     data={
-                        'title': "Новости/Жанылык",
+                        'title': "Новости/Жаңылыктар",
                         'body': self.name
                     })
 
@@ -222,6 +222,10 @@ class Notification(models.Model):
     title = models.CharField(max_length=300, null=True, blank=True)
     body = models.CharField(max_length=5000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save()
 
 
 class Game(models.Model):
@@ -298,17 +302,17 @@ class GameQuizGame(models.Model):
         if self.outer_point == -1:
             user = self.user_outer
             user1 = self.user_owner
-            body = "Вам бросил(а) вызов: " + self.user_owner.name
+            body = "Вам бросил(а) вызов: " + self.user_owner.name+"\nСизге чакырык таштады: "+self.user_owner.name
 
         elif self.outer_point > -1:
             user = self.user_owner
             user1 = self.user_outer
             if self.outer_point > self.owner_point:
-                body = "Вы проиграли: " + self.user_outer.name
+                body = "Вы проиграли: " + self.user_outer.name+"\n Сиз жеңилдиңиз: " + self.user_outer.name
             elif self.outer_point < self.owner_point:
-                body = "Вы выиграли: " + self.user_outer.name
+                body = "Вы выиграли: " + self.user_outer.name+"\n Сиз жеңдиңиз: " + self.user_outer.name
             else:
-                body = "У вас ничья с: " + self.user_outer.name
+                body = "У вас ничья с: " + self.user_outer.name+"\n Тең чыгуу: " + self.user_outer.name
 
         Notification(game=self, user=user, title="Дуэль", body=body).save()
         if user.is_notification is None or user.is_notification is True:
