@@ -62,7 +62,7 @@ class RatingViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Rating.objects.order_by('created_at')
+    queryset = Rating.objects.order_by("id")
     serializer_class = RatingSerializer
     filter_backends = [DjangoFilterBackend]
 
