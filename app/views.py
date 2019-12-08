@@ -380,7 +380,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
     filterset_fields = ['user']
 
     def get_queryset(self):
-        notification = self.queryset
+        user = self.request.GET.get('user')
+        notification = Notification.objects.order_by("-id").filter(user=user)
         for notif in notification:
             if not notif.is_view:
                 notif.is_view = True
