@@ -330,8 +330,8 @@ class Game1(APIView):
 class QuoteG(APIView):
     def get(self, request):
         if request.method == 'GET':
-            # lang = request.GET.get("lang")
-            snippets = Quote.objects.all()
+            lang = request.GET.get("lang")
+            snippets = Quote.objects.filter(lang=lang)
 
             serializer = QuoteSerializer(snippets[randrange(len(snippets))], many=False)
             return JsonResponse(serializer.data, safe=False)
