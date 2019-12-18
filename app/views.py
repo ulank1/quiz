@@ -34,6 +34,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ['id', 'login']
     search_fields = ['name']
+    
 
 
 class TestViewSet(viewsets.ModelViewSet):

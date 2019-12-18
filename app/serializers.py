@@ -11,6 +11,23 @@ class UserSerializer(serializers.ModelSerializer):
         model = Users
         fields = '__all__'
 
+    def create(self, validate_data):
+        us = Users.objects.filter(name=validate_data.get('name'))
+        if 0 == len(us):
+            users = Users(name=validate_data.get('name'),
+                          login=validate_data.get('login'),
+                          password=validate_data.get('password'),
+                          avatar=validate_data.get('avatar'),
+                          birth_date=validate_data.get('birth_date'),
+                          place=validate_data.get('place'),
+                          is_kg=validate_data.get('is_kg'),
+                          is_ru=validate_data.get('is_ru'),
+                          )
+            users.save()
+            return users
+        else:
+            return us[0]
+
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
