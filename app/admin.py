@@ -8,7 +8,6 @@ from jet.admin import CompactInline
 
 from app.models import *
 
-admin.site.register(Users)
 admin.site.register(MainCategory)
 admin.site.register(Category)
 admin.site.register(Rating)
@@ -17,6 +16,14 @@ admin.site.register(Notification)
 admin.site.register(Device)
 admin.site.register(Quote)
 admin.site.register(MyNotif)
+
+
+class UsersAdmin(admin.ModelAdmin):
+    model = Users
+    search_fields = ('question',)
+
+
+admin.site.register(Users, UsersAdmin)
 
 
 class InfoAdminForm(forms.ModelForm):
