@@ -20,7 +20,7 @@ admin.site.register(MyNotif)
 
 class UsersAdmin(admin.ModelAdmin):
     model = Users
-    search_fields = ('question',)
+    search_fields = ('name',)
 
 
 admin.site.register(Users, UsersAdmin)
