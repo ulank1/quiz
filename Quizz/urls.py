@@ -25,6 +25,7 @@ from app.views import *
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'users_duel', UsersForDuelViewSet)
 router.register(r'tests', TestViewSet)
 router.register(r'quiz', QuizViewSet)
 router.register(r'rating', RatingViewSet)
@@ -39,6 +40,7 @@ router.register(r'university_sub', UniversitySubCategoryViewSet)
 router.register(r'count', CountViewSet)
 router.register(r'news', NewsViewSet)
 router.register(r'ort', OrtViewSet)
+router.register(r'rating_all_of', RatingAllViewSet)
 router.register(r'ort_desc', OrtDescViewSet)
 router.register(r'notification', NotificationViewSet)
 urlpatterns = [
@@ -48,6 +50,7 @@ urlpatterns = [
                   path('api/v1/', include(router.urls)),
                   path('api/v1/game_quiz/', views.game_quiz_list),
                   path('api/v1/rating_al/', RatingAll.as_view()),
+                  path('api/v1/rating_first/', RatingFirst.as_view()),
                   path('api/v1/is_exist/', IsUserExist.as_view()),
                   path('api/v1/game_all/', GameInviteAll.as_view()),
                   path('api/v1/category_lang/', Category1.as_view()),

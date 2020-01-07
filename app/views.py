@@ -20,7 +20,9 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
+
 from app.models import *
+from app.paginations import LargeResultsSetPagination
 from app.serializers import *
 
 
@@ -34,7 +36,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ['id', 'login']
     search_fields = ['name']
-    
+
+
+class UsersForDuelViewSet(viewsets.ModelViewSet):
+    queryset = Users.objects.all().order_by('-duel_time')
+    serializer_class = UserSerializer
+    pagination_class = LargeResultsSetPagination
 
 
 class TestViewSet(viewsets.ModelViewSet):
@@ -183,6 +190,7 @@ def game_quiz_list(request):
 def get_random1(size):
     return randrange(size)
 
+
 def game_quiz_list_outer(request):
     """
     List all code snippets, or create a new snippet.
@@ -279,6 +287,50 @@ class RatingAll(APIView):
 
                 return Response({'size': position, 'first': RatingAllSerializer(first_rating, many=True).data,
                                  'rating': RatingAllSerializer(rating, many=True).data})
+
+
+class RatingFirst(APIView):
+
+    def get(self, request):
+        if request.method == 'GET':
+
+            user_id = request.GET.get('user_id')
+
+            rating = Rating.objects.order_by('-rating')
+            rating = rating.filter(created_at='all')
+            my_rating = rating.filter(user=user_id)
+
+            if len(rating) <= 0:
+                serializer = RatingSerializer(rating, many=True)
+                return Response({'size': len(rating), 'data': RatingSerializer(my_rating, many=True).data})
+            else:
+                my_id = my_rating[0].user_id
+                _size = len(rating)
+
+                first_rating = []
+
+                if _size > 2:
+                    first_rating = [rating[0], rating[1], rating[2]]
+                elif _size == 2:
+                    first_rating = [rating[0], rating[1]]
+                elif _size == 1:
+                    first_rating = [rating[0]]
+
+                position = 0
+                for i in range(_size):
+                    if my_id == rating[i].user_id:
+                        position = i + 1
+
+                return Response({'size': position, 'first': RatingAllSerializer(first_rating, many=True).data})
+
+
+class RatingAllViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Rating.objects.filter(created_at='all').order_by('-rating')
+    serializer_class = RatingAllSerializer
+    filter_backends = [DjangoFilterBackend]
 
 
 class GameInviteAll(APIView):
