@@ -320,7 +320,7 @@ class RatingFirst(APIView):
                 elif _size == 1:
                     first_rating = [rating[0]]
 
-                return Response({'me': RatingSerializer(my_rating, many=False).data, 'first': RatingAllSerializer(first_rating, many=True).data})
+                return Response({'me': RatingAllSerializer(my_rating, many=True).data, 'first': RatingAllSerializer(first_rating, many=True).data})
 
 
 class RatingAllViewSet(viewsets.ModelViewSet):
