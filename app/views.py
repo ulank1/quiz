@@ -38,7 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         keyword = self.request.query_params.get('name', '')
-        queryset = Post.objects.filter(name__iexact=keyword)
+        queryset = Users.objects.filter(name__iexact=keyword)
         return queryset
 
 
