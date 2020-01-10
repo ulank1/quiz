@@ -32,10 +32,14 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = Users.objects.all().order_by('-duel_time')
     serializer_class = UserSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['id', 'login']
-    search_fields = ['name']
+    
+    def get_queryset(self):
+        keyword = self.request.query_params.get('name', '')
+        queryset = Post.objects.filter(name__iexact=keyword)
+        return queryset
 
 
 class UsersForDuelViewSet(viewsets.ModelViewSet):
