@@ -319,8 +319,13 @@ class RatingFirst(APIView):
                     first_rating = [rating[0], rating[1]]
                 elif _size == 1:
                     first_rating = [rating[0]]
-
-                return Response({'me': RatingAllSerializer(my_rating, many=True).data, 'first': RatingAllSerializer(first_rating, many=True).data})
+                
+                position = 0
+                for i in range(_size):
+                    if my_id == rating[i].user_id:
+                        position = i + 1
+                
+                return Response({'size': position, 'me': RatingAllSerializer(my_rating, many=True).data, 'first': RatingAllSerializer(first_rating, many=True).data})
 
 
 class RatingAllViewSet(viewsets.ModelViewSet):
