@@ -43,6 +43,7 @@ router.register(r'ort', OrtViewSet)
 router.register(r'rating_all_of', RatingAllViewSet)
 router.register(r'ort_desc', OrtDescViewSet)
 router.register(r'notification', NotificationViewSet)
+router.register(r'comment_quiz', CommentQuizViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),
@@ -60,7 +61,6 @@ urlpatterns = [
                   path('api/v1/notification_count/', NotificationCount.as_view()),
                   path('api/v1/game_quiz_outer/', views.game_quiz_list_outer),
                   path('api/v1/device', FCMDeviceCreateView.as_view({'post': 'create'})),
-                  url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
                   # path('api/v1/rating_add/', views.set_rating),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

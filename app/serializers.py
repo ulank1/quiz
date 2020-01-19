@@ -174,3 +174,22 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'
+
+
+class AnswerQuizSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AnswerToComment
+        fields = '__all__'
+
+
+class CommentQuizSerializer(serializers.ModelSerializer):
+    answer = AnswerQuizSerializer(many=True)
+
+    class Meta:
+        model = CommentQuestion
+        fields = 'answer,name,message,quiz'.split(',')
+
+    def get_answers(self, obj):
+        return AnswerQuizSerializer(obj.answer).data
+

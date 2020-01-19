@@ -200,7 +200,6 @@ class News(models.Model):
         for user in users:
             Notification(news=self, user=user, title="Новости/Жаңылыктар", body=self.name).save()
             if user.is_notification is None or user.is_notification is True:
-
                 Device.objects.filter(users=user).send_message(
                     api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
                     data={
@@ -264,23 +263,15 @@ class DayQuiz(models.Model):
 
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
     question = models.TextField(null=True, blank=True, verbose_name='вопрос')
-    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
-    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
-    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
-    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
-    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
-    true_answer = models.TextField(max_length=1, verbose_name="правильный ответ")
     date = models.DateField(verbose_name='дата')
-    duration = models.IntegerField(null=True, blank=True, verbose_name='время одного вопроса')
 
     def __str__(self):
         return self.question
 
 
 class GameQuizGame(models.Model):
-
     quiz = models.CharField(max_length=500)
-    category = models.CharField(max_length=500,null=True,blank=True)
+    category = models.CharField(max_length=500, null=True, blank=True)
 
     user_owner = models.ForeignKey('Users', verbose_name='Тот Кто отправил', related_name='user_owner',
                                    on_delete=models.CASCADE)
@@ -298,17 +289,17 @@ class GameQuizGame(models.Model):
         if self.outer_point == -1:
             user = self.user_outer
             user1 = self.user_owner
-            body = "Вам бросил(а) вызов: " + self.user_owner.name+"\nСизге чакырык таштады: "+self.user_owner.name
+            body = "Вам бросил(а) вызов: " + self.user_owner.name + "\nСизге чакырык таштады: " + self.user_owner.name
 
         elif self.outer_point > -1:
             user = self.user_owner
             user1 = self.user_outer
             if self.outer_point > self.owner_point:
-                body = "Вы проиграли: " + self.user_outer.name+"\n Сиз жеңилдиңиз: " + self.user_outer.name
+                body = "Вы проиграли: " + self.user_outer.name + "\n Сиз жеңилдиңиз: " + self.user_outer.name
             elif self.outer_point < self.owner_point:
-                body = "Вы выиграли: " + self.user_outer.name+"\n Сиз жеңдиңиз: " + self.user_outer.name
+                body = "Вы выиграли: " + self.user_outer.name + "\n Сиз жеңдиңиз: " + self.user_outer.name
             else:
-                body = "У вас ничья с: " + self.user_outer.name+"\n Тең чыгуу: " + self.user_outer.name
+                body = "У вас ничья с: " + self.user_outer.name + "\n Тең чыгуу: " + self.user_outer.name
 
         Notification(game=self, user=user, title="Дуэль", body=body).save()
         if user.is_notification is None or user.is_notification is True:
@@ -336,7 +327,7 @@ class Device(FCMDevice):
 
 class Quote(models.Model):
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
-    quote = models.TextField(max_length=1000,null=True,blank=True)
+    quote = models.TextField(max_length=1000, null=True, blank=True)
 
 
 class MyNotif(models.Model):
@@ -363,3 +354,32 @@ class MyNotif(models.Model):
                 'body': self.desc
             })
 
+
+class CommentQuestion(models.Model):
+    class Meta:
+        verbose_name = "Коментарий к задаче дня"
+        verbose_name_plural = "Коментарии к задаче дня"
+
+    quiz = models.ForeignKey(
+        DayQuiz,
+        on_delete=models.CASCADE,
+        related_name='Comment'
+    )
+    name = models.CharField(max_length=100, blank=True, null=True)
+    message = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.name + " " + self.message
+
+
+class AnswerToComment(models.Model):
+    class Meta:
+        verbose_name = "Ответ к коментарию к задаче дня"
+        verbose_name_plural = "Ответы к коментарию к задаче дня"
+
+    comment = models.ForeignKey(CommentQuestion, on_delete=models.CASCADE, related_name='answer')
+    name = models.CharField(max_length=100, blank=True, null=True)
+    message = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.name + " " + self.message

@@ -16,6 +16,8 @@ admin.site.register(Notification)
 admin.site.register(Device)
 admin.site.register(Quote)
 admin.site.register(MyNotif)
+admin.site.register(CommentQuestion)
+admin.site.register(AnswerToComment)
 
 
 class UsersAdmin(admin.ModelAdmin):

@@ -484,3 +484,16 @@ class IsUserExist(APIView):
                 b = False
 
         return Response({"success": b})
+
+
+class CommentQuizViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CommentQuestion.objects.order_by('-id')
+    serializer_class = CommentQuizSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['quiz']
+
+
