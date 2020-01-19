@@ -189,7 +189,7 @@ class CommentQuizSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentQuestion
-        fields = 'answer,name,message,quiz'.split(',')
+        fields = 'answer,name,message,quiz,user'.split(',')
 
     def get_answers(self, obj):
         return AnswerQuizSerializer(obj.answer).data
