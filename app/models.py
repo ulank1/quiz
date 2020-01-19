@@ -365,6 +365,7 @@ class CommentQuestion(models.Model):
         on_delete=models.CASCADE,
         related_name='Comment'
     )
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='Comment', null=True, blank=True)
     name = models.CharField(max_length=100, blank=True, null=True)
     message = models.CharField(max_length=500, blank=True, null=True)
 
@@ -377,6 +378,7 @@ class AnswerToComment(models.Model):
         verbose_name = "Ответ к коментарию к задаче дня"
         verbose_name_plural = "Ответы к коментарию к задаче дня"
 
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='answer', null=True, blank=True)
     comment = models.ForeignKey(CommentQuestion, on_delete=models.CASCADE, related_name='answer')
     name = models.CharField(max_length=100, blank=True, null=True)
     message = models.CharField(max_length=500, blank=True, null=True)
