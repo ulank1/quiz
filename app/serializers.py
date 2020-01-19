@@ -177,7 +177,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 class AnswerQuizSerializer(serializers.ModelSerializer):
-
+    user = UserSerializer()
     class Meta:
         model = AnswerToComment
         fields = '__all__'
@@ -185,6 +185,7 @@ class AnswerQuizSerializer(serializers.ModelSerializer):
 
 class CommentQuizSerializer(serializers.ModelSerializer):
     answer = AnswerQuizSerializer(many=True)
+    user = UserSerializer()
 
     class Meta:
         model = CommentQuestion
