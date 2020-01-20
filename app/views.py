@@ -511,7 +511,7 @@ class AnswerQuizViewSet(viewsets.ModelViewSet):
     API endpoint that allows users to be viewed or edited.
     """
     queryset = AnswerToComment.objects.all()
-    serializer_class = AnswerQuizSerializer
+    serializer_class = AnswerQuizCreateSerializer
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['quiz']

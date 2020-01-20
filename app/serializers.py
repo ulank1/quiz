@@ -200,3 +200,11 @@ class CommentQuizCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentQuestion
         fields = '__all__'
+
+
+class AnswerQuizCreateSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = AnswerToComment
+        fields = '__all__'
