@@ -203,7 +203,6 @@ class CommentQuizCreateSerializer(serializers.ModelSerializer):
 
 
 class AnswerQuizCreateSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
 
     class Meta:
         model = AnswerToComment
