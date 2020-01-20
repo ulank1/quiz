@@ -197,8 +197,6 @@ class CommentQuizSerializer(serializers.ModelSerializer):
 
 
 class CommentQuizCreateSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = CommentQuestion
         fields = '__all__'
