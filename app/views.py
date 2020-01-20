@@ -20,7 +20,6 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
-
 from app.models import *
 from app.paginations import LargeResultsSetPagination
 from app.serializers import *
@@ -36,8 +35,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ['id', 'login']
     search_fields = ['name']
-    
-   
 
 
 class UsersForDuelViewSet(viewsets.ModelViewSet):
@@ -46,7 +43,7 @@ class UsersForDuelViewSet(viewsets.ModelViewSet):
     pagination_class = LargeResultsSetPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-    
+
 
 class TestViewSet(viewsets.ModelViewSet):
     """
@@ -319,13 +316,14 @@ class RatingFirst(APIView):
                     first_rating = [rating[0], rating[1]]
                 elif _size == 1:
                     first_rating = [rating[0]]
-                
+
                 position = 0
                 for i in range(_size):
                     if my_id == rating[i].user_id:
                         position = i + 1
-                
-                return Response({'size': position, 'me': RatingAllSerializer(my_rating, many=True).data, 'first': RatingAllSerializer(first_rating, many=True).data})
+
+                return Response({'size': position, 'me': RatingAllSerializer(my_rating, many=True).data,
+                                 'first': RatingAllSerializer(first_rating, many=True).data})
 
 
 class RatingAllViewSet(viewsets.ModelViewSet):
@@ -497,3 +495,23 @@ class CommentQuizViewSet(viewsets.ModelViewSet):
     filterset_fields = ['quiz']
 
 
+class CommentQuizCreateViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CommentQuestion.objects.all()
+    serializer_class = CommentQuizCreateSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['quiz']
+
+
+class AnswerQuizViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = AnswerToComment.objects.all()
+    serializer_class = AnswerQuizSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['quiz']
