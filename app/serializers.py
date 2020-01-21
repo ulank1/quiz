@@ -261,10 +261,41 @@ class LikeQuizSerializer(serializers.ModelSerializer):
         user = validated_data.get('user')
         comment__id = validated_data.get('comment')
         _create = model.objects.filter(user=user, comment=comment__id)
+        print(_create.exists())
+        if _create.exists():
+            _create = _create.first()
+            self.quiz_like_update(_create, validated_data)
+            return _create
+
+        instance = model.objects.create(**validated_data)
+        return instance
+
+    def quiz_like_update(self, instance, validated_data):
+        signal = validated_data.get('like')
+        if signal == instance.like:
+            instance.like = 0
+        else:
+            instance.like = signal
+        instance.save()
+        return instance
+
+
+class LikeAnswerQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeAnswerQuiz
+        fields = '__all__'
+
+    def create(self, validated_data):
+
+        model = self.Meta.model
+        user = validated_data.get('user')
+        comment__id = validated_data.get('answer')
+        _create = model.objects.filter(user=user, answer=comment__id)
 
         if _create.exists():
             _create = _create.first()
             self.quiz_like_update(_create, validated_data)
+            return _create
 
         instance = model.objects.create(**validated_data)
         return instance

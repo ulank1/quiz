@@ -525,3 +525,12 @@ class LikeQuizViewSet(viewsets.ModelViewSet):
     serializer_class = LikeQuizSerializer
     filter_backends = [DjangoFilterBackend]
 
+
+class LikeAnswerQuizViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = LikeAnswerQuiz.objects.all()
+    serializer_class = LikeAnswerQuizSerializer
+    filter_backends = [DjangoFilterBackend]
+
