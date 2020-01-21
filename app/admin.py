@@ -18,6 +18,7 @@ admin.site.register(Quote)
 admin.site.register(MyNotif)
 admin.site.register(CommentQuestion)
 admin.site.register(AnswerToComment)
+admin.site.register(LikeQuiz)
 
 
 class UsersAdmin(admin.ModelAdmin):

@@ -178,22 +178,64 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class AnswerQuizSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    like_count = serializers.SerializerMethodField()
+    un_like_count = serializers.SerializerMethodField()
+    is_my_like = serializers.SerializerMethodField()
 
     class Meta:
         model = AnswerToComment
         fields = '__all__'
 
+    def get_like_count(self, obj):
+        return obj.like_answer_quiz.filter(like=1).count()
+
+    def get_un_like_count(self, obj):
+        return obj.like_answer_quiz.filter(like=2).count()
+
+    def get_is_my_like(self, obj):
+        request = self.context['request']
+        like = obj.like_answer_quiz.filter(user=request.GET.get('user_id')).filter(like=1)
+        un_like = obj.like_answer_quiz.filter(user=request.GET.get('user_id')).filter(like=2)
+        print(request.GET.get('user_id'))
+        print(like)
+        if like.count() > 0:
+            return 1
+        elif un_like.count() > 0:
+            return 2
+        return 0
+
 
 class CommentQuizSerializer(serializers.ModelSerializer):
     answer = AnswerQuizSerializer(many=True)
     user = UserSerializer()
+    like_count = serializers.SerializerMethodField()
+    un_like_count = serializers.SerializerMethodField()
+    is_my_like = serializers.SerializerMethodField()
 
     class Meta:
         model = CommentQuestion
-        fields = 'id,answer,name,message,quiz,user'.split(',')
+        fields = 'id,answer,name,message,quiz,user,like_count,is_my_like,un_like_count'.split(',')
 
     def get_answers(self, obj):
         return AnswerQuizSerializer(obj.answer).data
+
+    def get_like_count(self, obj):
+        return obj.like_quiz.filter(like=1).count()
+
+    def get_un_like_count(self, obj):
+        return obj.like_quiz.filter(like=2).count()
+
+    def get_is_my_like(self, obj):
+        request = self.context['request']
+        like = obj.like_quiz.filter(user=request.GET.get('user_id')).filter(like=1)
+        un_like = obj.like_quiz.filter(user=request.GET.get('user_id')).filter(like=2)
+        print(request.GET.get('user_id'))
+        print(like)
+        if like.count() > 0:
+            return 1
+        elif un_like.count() > 0:
+            return 2
+        return 0
 
 
 class CommentQuizCreateSerializer(serializers.ModelSerializer):
@@ -203,7 +245,35 @@ class CommentQuizCreateSerializer(serializers.ModelSerializer):
 
 
 class AnswerQuizCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = AnswerToComment
         fields = '__all__'
+
+
+class LikeQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeQuiz
+        fields = '__all__'
+
+    def create(self, validated_data):
+
+        model = self.Meta.model
+        user = validated_data.get('user')
+        comment__id = validated_data.get('comment')
+        _create = model.objects.filter(user=user, comment=comment__id)
+
+        if _create.exists():
+            _create = _create.first()
+            self.quiz_like_update(_create, validated_data)
+
+        instance = model.objects.create(**validated_data)
+        return instance
+
+    def quiz_like_update(self, instance, validated_data):
+        signal = validated_data.get('like')
+        if signal == instance.like:
+            instance.like = 0
+        else:
+            instance.like = signal
+        instance.save()
+        return instance

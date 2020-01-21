@@ -46,6 +46,7 @@ router.register(r'notification', NotificationViewSet)
 router.register(r'comment_quiz', CommentQuizViewSet)
 router.register(r'comment_quiz_create', CommentQuizCreateViewSet)
 router.register(r'answer_quiz', AnswerQuizViewSet)
+router.register(r'like_quiz', LikeQuizViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),

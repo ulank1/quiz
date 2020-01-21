@@ -9,6 +9,7 @@ def image_upload_to(instance, filename):
 
 
 LANG_CHOICES = ((1, 'KG'), (2, 'RU'))
+LIKE_CHOICES = ((0, "No"), (1, 'Like'), (2, 'UnLike'))
 
 
 class Users(models.Model):
@@ -385,3 +386,15 @@ class AnswerToComment(models.Model):
 
     def __str__(self):
         return self.name + " " + self.message
+
+
+class LikeQuiz(models.Model):
+    like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_quiz', null=True, blank=True)
+    comment = models.ForeignKey(CommentQuestion, on_delete=models.CASCADE, related_name='like_quiz', null=True, blank=True)
+
+
+class LikeAnswerQuiz(models.Model):
+    like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_answer_quiz', null=True, blank=True)
+    answer = models.ForeignKey(AnswerToComment, on_delete=models.CASCADE, related_name='like_answer_quiz', null=True, blank=True)
