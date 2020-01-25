@@ -333,6 +333,15 @@ class RatingAllViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.filter(created_at='all').order_by('-rating')
     serializer_class = RatingAllSerializer
     filter_backends = [DjangoFilterBackend]
+
+
+class RatingAllWithPaginationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Rating.objects.filter(created_at='all').order_by('-rating')
+    serializer_class = RatingAllSerializer
+    filter_backends = [DjangoFilterBackend]
     pagination_class = LargeResultsSetPagination
 
 
