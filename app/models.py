@@ -199,7 +199,7 @@ class News(models.Model):
         users = Users.objects.all()
 
         for user in users:
-            Notification(news=self, user=user, title="Новости/Жаңылыктар", body=self.name).save()
+            # Notification(news=self, user=user, title="Новости/Жаңылыктар", body=self.name).save()
             if user.is_notification is None or user.is_notification is True:
                 Device.objects.filter(users=user).send_message(
                     api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
