@@ -7,7 +7,6 @@ from app.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    friend = serializers.SerializerMethodField()
 
     class Meta:
         model = Users
@@ -29,15 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
             return users
         else:
             return us[0]
-
-    def get_friend(self, obj):
-        request = self.context['request']
-        like = obj.friend.filter(user=request.GET.get('user')).filter(is_active=True)
-        print(like)
-        if len(like) == 0:
-            return False
-        else:
-            return True
 
 
 class UserDuelSerializer(serializers.ModelSerializer):

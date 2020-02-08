@@ -45,6 +45,14 @@ class UsersForDuelViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
 
 
+class SearchUsersForDuelViewSet(viewsets.ModelViewSet):
+    queryset = Users.objects.all().order_by('-duel_time')
+    serializer_class = UserDuelSerializer
+    pagination_class = LargeResultsSetPagination
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
+
+
 class TestViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

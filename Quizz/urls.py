@@ -51,6 +51,7 @@ router.register(r'like_quiz', LikeQuizViewSet)
 router.register(r'like_answer_quiz', LikeAnswerQuizViewSet)
 router.register(r'friend', FriendViewSet)
 router.register(r'my_friend', MyFriendViewSet)
+router.register(r'search_users', SearchUsersForDuelViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),
