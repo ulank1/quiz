@@ -48,7 +48,6 @@ class UsersForDuelViewSet(viewsets.ModelViewSet):
 class SearchUsersForDuelViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all().order_by('-duel_time')
     serializer_class = UserDuelSerializer
-    pagination_class = LargeResultsSetPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
 
