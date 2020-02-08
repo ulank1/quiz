@@ -205,8 +205,6 @@ class News(models.Model):
             })
 
 
-
-
 class Notification(models.Model):
     news = models.ForeignKey('News', related_name='not1',
                              on_delete=models.CASCADE, null=True, blank=True)
