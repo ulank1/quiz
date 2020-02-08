@@ -29,6 +29,40 @@ class UserSerializer(serializers.ModelSerializer):
             return us[0]
 
 
+class UserDuelSerializer(serializers.ModelSerializer):
+    friend = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Users
+        fields = '__all__'
+
+    def create(self, validate_data):
+        us = Users.objects.filter(name=validate_data.get('name'))
+        if 0 == len(us):
+            users = Users(name=validate_data.get('name'),
+                          login=validate_data.get('login'),
+                          password=validate_data.get('password'),
+                          avatar=validate_data.get('avatar'),
+                          birth_date=validate_data.get('birth_date'),
+                          place=validate_data.get('place'),
+                          is_kg=validate_data.get('is_kg'),
+                          is_ru=validate_data.get('is_ru'),
+                          )
+            users.save()
+            return users
+        else:
+            return us[0]
+
+    def get_friend(self, obj):
+        request = self.context['request']
+        like = obj.friend.filter(user=request.GET.get('user')).filter(is_active=True)
+        print(like)
+        if len(like) == 0:
+            return False
+        else:
+            return True
+
+
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
@@ -308,3 +342,42 @@ class LikeAnswerQuizSerializer(serializers.ModelSerializer):
             instance.like = signal
         instance.save()
         return instance
+
+
+class FriendSerializer(serializers.ModelSerializer):
+    # friend = UserSerializer()
+
+    class Meta:
+        model = Friend
+        fields = '__all__'
+
+    def create(self, validated_data):
+
+        model = self.Meta.model
+        user = validated_data.get('user')
+        friend = validated_data.get('friend')
+        _create = model.objects.filter(user=user, friend=friend)
+
+        if _create.exists():
+            _create = _create.first()
+            self.quiz_like_update(_create, validated_data)
+            return _create
+
+        instance = model.objects.create(**validated_data)
+        return instance
+
+    def quiz_like_update(self, instance, validated_data):
+        if instance.is_active:
+            instance.is_active = False
+        else:
+            instance.is_active = True
+        instance.save()
+        return instance
+
+
+class FriendGetSerializer(serializers.ModelSerializer):
+    friend = UserSerializer()
+
+    class Meta:
+        model = Friend
+        fields = '__all__'

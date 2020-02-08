@@ -39,7 +39,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class UsersForDuelViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all().order_by('-duel_time')
-    serializer_class = UserSerializer
+    serializer_class = UserDuelSerializer
     pagination_class = LargeResultsSetPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
@@ -343,6 +343,26 @@ class RatingAllWithPaginationViewSet(viewsets.ModelViewSet):
     serializer_class = RatingAllSerializer
     filter_backends = [DjangoFilterBackend]
     pagination_class = LargeResultsSetPagination
+
+
+class FriendViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Friend.objects.all()
+    serializer_class = FriendSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user', 'friend']
+
+
+class MyFriendViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Friend.objects.filter(is_active=True)
+    serializer_class = FriendGetSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user', 'friend']
 
 
 class GameInviteAll(APIView):

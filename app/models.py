@@ -197,16 +197,14 @@ class News(models.Model):
              update_fields=None):
         super().save()
         users = Users.objects.all()
+        Device.objects.all().send_message(
+            api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
+            data={
+                'title': "Новости/Жаңылыктар",
+                'body': self.name
+            })
 
-        for user in users:
-            # Notification(news=self, user=user, title="Новости/Жаңылыктар", body=self.name).save()
-            if user.is_notification is None or user.is_notification is True:
-                Device.objects.filter(users=user).send_message(
-                    api_key="AAAA0w0fEAM:APA91bHCgAJUjQnWUMjBQFUrX8tbnhwTkNzw8RoLEMMMxZhTmDmayy2TQnPz3v26t7Y051wXOJqE2QHU5P5_Bj1YzmJMlmfapy35UoyixjThmzwMsbvml8gIGGRiENwEgAPciUq1IOEp",
-                    data={
-                        'title': "Новости/Жаңылыктар",
-                        'body': self.name
-                    })
+
 
 
 class Notification(models.Model):
@@ -393,10 +391,18 @@ class AnswerToComment(models.Model):
 class LikeQuiz(models.Model):
     like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_quiz', null=True, blank=True)
-    comment = models.ForeignKey(CommentQuestion, on_delete=models.CASCADE, related_name='like_quiz', null=True, blank=True)
+    comment = models.ForeignKey(CommentQuestion, on_delete=models.CASCADE, related_name='like_quiz', null=True,
+                                blank=True)
 
 
 class LikeAnswerQuiz(models.Model):
     like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_answer_quiz', null=True, blank=True)
-    answer = models.ForeignKey(AnswerToComment, on_delete=models.CASCADE, related_name='like_answer_quiz', null=True, blank=True)
+    answer = models.ForeignKey(AnswerToComment, on_delete=models.CASCADE, related_name='like_answer_quiz', null=True,
+                               blank=True)
+
+
+class Friend(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='friend_owner', null=True, blank=True)
+    friend = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='friend', null=True, blank=True)
+    is_active = models.BooleanField(null=True, blank=True, default=True)
