@@ -63,6 +63,7 @@ urlpatterns = [
                   path('api/v1/is_exist/', IsUserExist.as_view()),
                   path('api/v1/game_all/', GameInviteAll.as_view()),
                   path('api/v1/category_lang/', Category1.as_view()),
+                  path('api/v1/delete/', DeleteSultan.as_view()),
                   path('api/v1/quote/', QuoteG.as_view()),
                   path('api/v1/game_lang/', Game1.as_view()),
                   path('api/v1/game_invite/', GameAll.as_view()),

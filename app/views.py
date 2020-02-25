@@ -571,3 +571,12 @@ class LikeAnswerQuizViewSet(viewsets.ModelViewSet):
     serializer_class = LikeAnswerQuizSerializer
     filter_backends = [DjangoFilterBackend]
 
+
+class DeleteSultan(APIView):
+    def get(self, request):
+        if request.method == 'GET':
+            user = request.GET.get('user')
+            rating = Rating.objects.order_by('-id').filter(user=4374)[:3000]
+            for rat in rating:
+                rat.delete()
+            return Response({"success": "s"})
