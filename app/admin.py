@@ -230,5 +230,7 @@ class RatingAdmin(admin.ModelAdmin):
     class Meta:
         model = Rating
 
+    list_display = ('rating', 'created_at')
+
 
 admin.site.register(Rating, RatingAdmin)
