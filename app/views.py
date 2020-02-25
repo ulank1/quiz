@@ -588,7 +588,7 @@ class DeleteSultan(APIView):
                 elif g.owner_point < g.outer_point:
                     user_own.lose = user_own.lose + 1
                     user_out.win = user_out.win + 1
-                elif g.owner_point < g.outer_point:
+                elif g.owner_point == g.outer_point:
                     user_own.draw = user_own.draw + 1
                     user_out.draw = user_out.draw + 1
                 user_out.save()
