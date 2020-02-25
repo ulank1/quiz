@@ -593,4 +593,4 @@ class DeleteSultan(APIView):
                     user_out.draw = user_out.draw + 1
                 user_out.save()
                 user_own.save()
-            return Response({"success": "s"})
+            return Response({"success": "s"+min})
