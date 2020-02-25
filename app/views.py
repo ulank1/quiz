@@ -574,17 +574,23 @@ class LikeAnswerQuizViewSet(viewsets.ModelViewSet):
 class DeleteSultan(APIView):
     def get(self, request):
         if request.method == 'GET':
-            game = GameQuizGame.objects.order_by('user_owner')
+            min = request.GET.get('min')
+            ofs = request.GET.get('ofs')
+            minin = int(min)
+            ofsin = int(ofs)
+            game = GameQuizGame.objects.order_by('id')[minin * ofsin: (minin + 1) * ofsin]
             for g in game:
                 user_own = g.user_owner
                 user_out = g.user_outer
-                if g.owner_point> g.outer_point:
-                    user_own.win = user_own.win+1
-                    user_out.lose = user_out.lose+1
+                if g.owner_point > g.outer_point:
+                    user_own.win = user_own.win + 1
+                    user_out.lose = user_out.lose + 1
                 elif g.owner_point < g.outer_point:
                     user_own.lose = user_own.lose + 1
                     user_out.win = user_out.win + 1
                 elif g.owner_point < g.outer_point:
                     user_own.draw = user_own.draw + 1
                     user_out.draw = user_out.draw + 1
+                user_out.save()
+                user_own.save()
             return Response({"success": "s"})
