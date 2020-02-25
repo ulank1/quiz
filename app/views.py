@@ -576,7 +576,7 @@ class DeleteSultan(APIView):
     def get(self, request):
         if request.method == 'GET':
             user = request.GET.get('user')
-            rating = Rating.objects.order_by('-id').filter(user=4374)[:3000]
+            rating = Rating.objects.order_by('-id').filter(user=4374)[:1000]
             for rat in rating:
                 if rat.rating == 0:
                     rat.delete()
