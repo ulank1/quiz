@@ -28,6 +28,9 @@ class Users(models.Model):
     is_kg = models.BooleanField(null=True, blank=True, default=False)
     is_ru = models.BooleanField(null=True, blank=True, default=False)
     is_notification = models.BooleanField(null=True, blank=True, default=True)
+    win = models.IntegerField(null=True,blank=True, default=0)
+    lose = models.IntegerField(null=True,blank=True, default=0)
+    draw = models.IntegerField(null=True,blank=True, default=0)
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
 

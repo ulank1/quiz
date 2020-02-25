@@ -574,9 +574,11 @@ class LikeAnswerQuizViewSet(viewsets.ModelViewSet):
 class DeleteSultan(APIView):
     def get(self, request):
         if request.method == 'GET':
-            user = request.GET.get('user')
-            rating = Rating.objects.order_by('-id').filter(user=841)[:5000]
-            for rat in rating:
-                if rat.rating == 0:
-                    rat.delete()
+            game = GameQuizGame.objects.order_by('user_owner')
+            for g in game:
+                user_own = g.user_owner
+                if user_own.win is None:
+                    pass
+                if g.owner_point> g.outer_point:
+                    pass
             return Response({"success": "s"})
