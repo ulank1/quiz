@@ -305,11 +305,20 @@ class GameQuizGame(models.Model):
             user = self.user_owner
             user1 = self.user_outer
             if self.outer_point > self.owner_point:
+                user.lose = user.lose+1
+                user1.win = user1.win+1
                 body = "Вы проиграли: " + self.user_outer.name + "\n Сиз жеңилдиңиз: " + self.user_outer.name
             elif self.outer_point < self.owner_point:
+                user.win = user.win + 1
+                user1.lose = user1.lose + 1
                 body = "Вы выиграли: " + self.user_outer.name + "\n Сиз жеңдиңиз: " + self.user_outer.name
             else:
+                user.draw = user.draw + 1
+                user1.draw = user1.draw + 1
                 body = "У вас ничья с: " + self.user_outer.name + "\n Тең чыгуу: " + self.user_outer.name
+
+            user.save()
+            user1.save()
 
         Notification(game=self, user=user, title="Дуэль", body=body).save()
         if user.is_notification is None or user.is_notification is True:

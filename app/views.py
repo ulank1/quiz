@@ -381,8 +381,8 @@ class GameInviteAll(APIView):
             true_game = []
             game = GameQuizGame.objects.order_by('-id')
 
-            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))[:20]
-            for onw in owner:
+            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))
+            for onw in owner[:20]:
                 true_game.append(onw)
 
             return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
