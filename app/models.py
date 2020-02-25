@@ -219,6 +219,14 @@ class Notification(models.Model):
     body = models.CharField(max_length=5000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save()
+        notif = Notification.objects.order_by('-id').filter(user=self.user)
+        if len(notif) > 30:
+            for i in range(30, len(notif)):
+                notif[i].delete()
+
 
 class Game(models.Model):
     class Meta:

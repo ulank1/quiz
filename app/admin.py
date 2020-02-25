@@ -10,7 +10,6 @@ from app.models import *
 
 admin.site.register(MainCategory)
 admin.site.register(Category)
-admin.site.register(Rating)
 admin.site.register(GameQuizGame)
 admin.site.register(Notification)
 admin.site.register(Device)
@@ -222,3 +221,14 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(News, NewsAdmin)
+
+
+class RatingAdmin(admin.ModelAdmin):
+    ordering = ['user']
+    list_filter = ['user', ]
+
+    class Meta:
+        model = Rating
+
+
+admin.site.register(Rating, RatingAdmin)
