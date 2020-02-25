@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from django.db.models import Q
 from fcm_django.models import FCMDevice
 
 
@@ -291,6 +292,7 @@ class GameQuizGame(models.Model):
              update_fields=None):
         global user, body
         super().save()
+
         if self.outer_point == -1:
             user = self.user_outer
             user1 = self.user_owner

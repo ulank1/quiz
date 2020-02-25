@@ -379,10 +379,9 @@ class GameInviteAll(APIView):
             user_id = request.GET.get('user_id')
 
             true_game = []
-
             game = GameQuizGame.objects.order_by('-id')
 
-            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))
+            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))[:30]
             for onw in owner.order_by('-id'):
                 true_game.append(onw)
 
@@ -576,7 +575,7 @@ class DeleteSultan(APIView):
     def get(self, request):
         if request.method == 'GET':
             user = request.GET.get('user')
-            rating = Rating.objects.order_by('-id').filter(user=4374)[:1000]
+            rating = Rating.objects.order_by('-id').filter(user=841)[:5000]
             for rat in rating:
                 if rat.rating == 0:
                     rat.delete()
