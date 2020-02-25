@@ -577,8 +577,14 @@ class DeleteSultan(APIView):
             game = GameQuizGame.objects.order_by('user_owner')
             for g in game:
                 user_own = g.user_owner
-                if user_own.win is None:
-                    pass
+                user_out = g.user_outer
                 if g.owner_point> g.outer_point:
-                    pass
+                    user_own.win = user_own.win+1
+                    user_out.lose = user_out.lose+1
+                elif g.owner_point < g.outer_point:
+                    user_own.lose = user_own.lose + 1
+                    user_out.win = user_out.win + 1
+                elif g.owner_point < g.outer_point:
+                    user_own.draw = user_own.draw + 1
+                    user_out.draw = user_out.draw + 1
             return Response({"success": "s"})
