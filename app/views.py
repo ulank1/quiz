@@ -381,7 +381,7 @@ class GameInviteAll(APIView):
             true_game = []
             game = GameQuizGame.objects.order_by('-id')
 
-            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))[:30]
+            owner = game.filter(Q(user_owner=user_id) | Q(user_outer=user_id))[:20]
             for onw in owner:
                 true_game.append(onw)
 
