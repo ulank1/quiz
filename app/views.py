@@ -385,6 +385,9 @@ class GameInviteAll(APIView):
             for onw in owner[:20]:
                 true_game.append(onw)
 
+            for own in owner[20:owner.count()]:
+                own.delete()
+
             return JsonResponse(GameQuizGameSerializerGandon(true_game, many=True).data, safe=False)
 
 
@@ -593,4 +596,70 @@ class DeleteSultan(APIView):
                     user_out.draw = user_out.draw + 1
                 user_out.save()
                 user_own.save()
-            return Response({"success": "s"+min})
+            return Response({"success": "s" + min})
+
+
+class CommentForumViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CommentForum.objects.order_by('-id')
+    serializer_class = CommentForumSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['topic']
+
+
+class CommentForumCreateViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CommentForum.objects.all()
+    serializer_class = CommentForumCreateSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['topic']
+
+
+class AnswerForumViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = AnswerToCommentForum.objects.all()
+    serializer_class = AnswerForumCreateSerializer
+    filter_backends = [DjangoFilterBackend]
+
+
+class LikeForumViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = LikeForum.objects.all()
+    serializer_class = LikeForumSerializer
+    filter_backends = [DjangoFilterBackend]
+
+
+class LikeAnswerForumViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = LikeAnswerForum.objects.all()
+    serializer_class = LikeAnswerForumSerializer
+    filter_backends = [DjangoFilterBackend]
+
+
+class ForumViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Forum.objects.all()
+    serializer_class = ForumSerializer
+    filter_backends = [DjangoFilterBackend]
+
+
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['forum']

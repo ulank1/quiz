@@ -49,9 +49,16 @@ router.register(r'comment_quiz_create', CommentQuizCreateViewSet)
 router.register(r'answer_quiz', AnswerQuizViewSet)
 router.register(r'like_quiz', LikeQuizViewSet)
 router.register(r'like_answer_quiz', LikeAnswerQuizViewSet)
+router.register(r'comment_forum', CommentForumViewSet)
+router.register(r'comment_forum_create', CommentForumCreateViewSet)
+router.register(r'answer_forum', AnswerForumViewSet)
+router.register(r'like_forum', LikeForumViewSet)
+router.register(r'like_answer_forum', LikeAnswerForumViewSet)
 router.register(r'friend', FriendViewSet)
 router.register(r'my_friend', MyFriendViewSet)
 router.register(r'search_users', SearchUsersForDuelViewSet)
+router.register(r'forum', ForumViewSet)
+router.register(r'topic', TopicViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),

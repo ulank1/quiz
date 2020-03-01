@@ -19,6 +19,12 @@ admin.site.register(CommentQuestion)
 admin.site.register(AnswerToComment)
 admin.site.register(LikeQuiz)
 admin.site.register(LikeAnswerQuiz)
+admin.site.register(CommentForum)
+admin.site.register(AnswerToCommentForum)
+admin.site.register(LikeAnswerForum)
+admin.site.register(LikeForum)
+admin.site.register(Forum)
+admin.site.register(Topic)
 
 
 class UsersAdmin(admin.ModelAdmin):

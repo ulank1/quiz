@@ -28,9 +28,10 @@ class Users(models.Model):
     is_kg = models.BooleanField(null=True, blank=True, default=False)
     is_ru = models.BooleanField(null=True, blank=True, default=False)
     is_notification = models.BooleanField(null=True, blank=True, default=True)
-    win = models.IntegerField(null=True,blank=True, default=0)
-    lose = models.IntegerField(null=True,blank=True, default=0)
-    draw = models.IntegerField(null=True,blank=True, default=0)
+    win = models.IntegerField(null=True, blank=True, default=0)
+    lose = models.IntegerField(null=True, blank=True, default=0)
+    draw = models.IntegerField(null=True, blank=True, default=0)
+    is_admin = models.BooleanField(default=False, null=True, blank=True)
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
 
@@ -305,8 +306,8 @@ class GameQuizGame(models.Model):
             user = self.user_owner
             user1 = self.user_outer
             if self.outer_point > self.owner_point:
-                user.lose = user.lose+1
-                user1.win = user1.win+1
+                user.lose = user.lose + 1
+                user1.win = user1.win + 1
                 body = "Вы проиграли: " + self.user_outer.name + "\n Сиз жеңилдиңиз: " + self.user_outer.name
             elif self.outer_point < self.owner_point:
                 user.win = user.win + 1
@@ -426,3 +427,84 @@ class Friend(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='friend_owner', null=True, blank=True)
     friend = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='friend', null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True, default=True)
+
+
+class Forum(models.Model):
+    class Meta:
+        verbose_name_plural = "Название форума"
+        verbose_name = "Название форума"
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    is_active = models.BooleanField(null=True, blank=True, default=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Topic(models.Model):
+    class Meta:
+        verbose_name_plural = "Тема форума"
+        verbose_name = "Тема форума"
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='topic', null=True, blank=True)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='topic', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='картинка')
+    is_active = models.BooleanField(null=True, blank=True, default=True)
+
+    def __str__(self):
+        return self.title
+
+
+class CommentForum(models.Model):
+    class Meta:
+        verbose_name = "Коментарий к Форуму"
+        verbose_name_plural = "Коментарии к Форуму"
+
+    topic = models.ForeignKey(
+        Topic,
+        on_delete=models.CASCADE,
+        related_name='comment'
+    )
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='comment_forum', null=True, blank=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    message = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.message
+
+
+class AnswerToCommentForum(models.Model):
+    class Meta:
+        verbose_name = "Ответ к коментарию к Форуму"
+        verbose_name_plural = "Ответы к коментарию к Форуму"
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='answer_forum', null=True, blank=True)
+    comment = models.ForeignKey(CommentForum, on_delete=models.CASCADE, related_name='answer')
+    name = models.CharField(max_length=100, blank=True, null=True)
+    message = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.message
+
+
+class LikeForum(models.Model):
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_forum', null=True, blank=True)
+    comment = models.ForeignKey(CommentForum, on_delete=models.CASCADE, related_name='like_forum', null=True,
+                                blank=True)
+
+
+class LikeAnswerForum(models.Model):
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    like = models.IntegerField(choices=LIKE_CHOICES, null=True, blank=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='like_answer_forum', null=True, blank=True)
+    answer = models.ForeignKey(AnswerToCommentForum, on_delete=models.CASCADE, related_name='like_answer_forum',
+                               null=True,
+                               blank=True)

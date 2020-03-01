@@ -7,7 +7,6 @@ from app.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Users
         fields = '__all__'
@@ -382,3 +381,153 @@ class FriendGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friend
         fields = '__all__'
+
+
+class AnswerForumSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    like_count = serializers.SerializerMethodField()
+    un_like_count = serializers.SerializerMethodField()
+    is_my_like = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AnswerToCommentForum
+        fields = '__all__'
+
+    def get_like_count(self, obj):
+        return obj.like_answer_forum.filter(like=1).count()
+
+    def get_un_like_count(self, obj):
+        return obj.like_answer_forum.filter(like=2).count()
+
+    def get_is_my_like(self, obj):
+        request = self.context['request']
+        like = obj.like_answer_forum.filter(user=request.GET.get('user_id')).filter(like=1)
+        un_like = obj.like_answer_forum.filter(user=request.GET.get('user_id')).filter(like=2)
+        if like.count() > 0:
+            return 1
+        elif un_like.count() > 0:
+            return 2
+        return 0
+
+
+class CommentForumSerializer(serializers.ModelSerializer):
+    answer = AnswerQuizSerializer(many=True)
+    user = UserSerializer()
+    like_count = serializers.SerializerMethodField()
+    un_like_count = serializers.SerializerMethodField()
+    is_my_like = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CommentForum
+        fields = 'id,answer,name,message,topic,user,like_count,is_my_like,un_like_count,created_at'.split(',')
+
+    def get_answers(self, obj):
+        return AnswerForumSerializer(obj.answer).data
+
+    def get_like_count(self, obj):
+        return obj.like_forum.filter(like=1).count()
+
+    def get_like_count(self, obj):
+        return obj.like_forum.filter(like=1).count()
+
+    def get_un_like_count(self, obj):
+        return obj.like_forum.filter(like=2).count()
+
+    def get_is_my_like(self, obj):
+        request = self.context['request']
+        like = obj.like_forum.filter(user=request.GET.get('user_id')).filter(like=1)
+        un_like = obj.like_forum.filter(user=request.GET.get('user_id')).filter(like=2)
+        if like.count() > 0:
+            return 1
+        elif un_like.count() > 0:
+            return 2
+        return 0
+
+
+class CommentForumCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentForum
+        fields = '__all__'
+
+
+class AnswerForumCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AnswerToCommentForum
+        fields = '__all__'
+
+
+class LikeForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeForum
+        fields = '__all__'
+
+    def create(self, validated_data):
+
+        model = self.Meta.model
+        user = validated_data.get('user')
+        comment__id = validated_data.get('comment')
+        _create = model.objects.filter(user=user, comment=comment__id)
+        print(_create.exists())
+        if _create.exists():
+            _create = _create.first()
+            self.quiz_like_update(_create, validated_data)
+            return _create
+
+        instance = model.objects.create(**validated_data)
+        return instance
+
+    def quiz_like_update(self, instance, validated_data):
+        signal = validated_data.get('like')
+        if signal == instance.like:
+            instance.like = 0
+        else:
+            instance.like = signal
+        instance.save()
+        return instance
+
+
+class LikeAnswerForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeAnswerForum
+        fields = '__all__'
+
+    def create(self, validated_data):
+
+        model = self.Meta.model
+        user = validated_data.get('user')
+        comment__id = validated_data.get('answer')
+        _create = model.objects.filter(user=user, answer=comment__id)
+
+        if _create.exists():
+            _create = _create.first()
+            self.quiz_like_update(_create, validated_data)
+            return _create
+
+        instance = model.objects.create(**validated_data)
+        return instance
+
+    def quiz_like_update(self, instance, validated_data):
+        signal = validated_data.get('like')
+        if signal == instance.like:
+            instance.like = 0
+        else:
+            instance.like = signal
+        instance.save()
+        return instance
+
+
+class ForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Forum
+        fields = '__all__'
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    comment_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Topic
+        fields = '__all__'
+
+    def get_comment_count(self, obj):
+        return obj.comment.all().count()
