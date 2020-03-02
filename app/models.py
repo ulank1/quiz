@@ -434,6 +434,7 @@ class Forum(models.Model):
         verbose_name_plural = "Название форума"
         verbose_name = "Название форума"
 
+    lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
     created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
     title = models.CharField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True, default=True)

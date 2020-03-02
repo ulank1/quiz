@@ -656,6 +656,8 @@ class ForumViewSet(viewsets.ModelViewSet):
     serializer_class = ForumSerializer
     filter_backends = [DjangoFilterBackend]
 
+    filterset_fields = ['lang']
+
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
