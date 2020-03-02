@@ -456,9 +456,6 @@ class Topic(models.Model):
     image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='картинка')
     is_active = models.BooleanField(null=True, blank=True, default=True)
 
-    def __str__(self):
-        return self.title
-
 
 class CommentForum(models.Model):
     class Meta:
