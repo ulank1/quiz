@@ -665,4 +665,4 @@ class TopicViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
     filterset_fields = ['forum']
-    search_fields = ['name']
+    search_fields = ['title']
