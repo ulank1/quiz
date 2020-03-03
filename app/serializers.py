@@ -411,7 +411,7 @@ class AnswerForumSerializer(serializers.ModelSerializer):
 
 
 class CommentForumSerializer(serializers.ModelSerializer):
-    answer = AnswerQuizSerializer(many=True)
+    answer = AnswerForumSerializer(many=True)
     user = UserSerializer()
     like_count = serializers.SerializerMethodField()
     un_like_count = serializers.SerializerMethodField()
