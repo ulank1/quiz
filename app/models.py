@@ -455,6 +455,7 @@ class Topic(models.Model):
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='картинка')
     is_active = models.BooleanField(null=True, blank=True, default=True)
+    comment_count = models.IntegerField(null=True, blank=True, default=0)
 
 
 class CommentForum(models.Model):
@@ -474,6 +475,12 @@ class CommentForum(models.Model):
 
     def __str__(self):
         return self.message
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save()
+        self.topic.comment_count = self.topic.comment_count + 1
+        self.topic.save()
 
 
 class AnswerToCommentForum(models.Model):

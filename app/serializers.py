@@ -523,11 +523,8 @@ class ForumSerializer(serializers.ModelSerializer):
 
 
 class TopicSerializer(serializers.ModelSerializer):
-    comment_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Topic
         fields = '__all__'
 
-    def get_comment_count(self, obj):
-        return obj.comment.all().count()
