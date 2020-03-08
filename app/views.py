@@ -664,5 +664,5 @@ class TopicViewSet(viewsets.ModelViewSet):
     serializer_class = TopicSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
-    filterset_fields = ['forum']
+    filterset_fields = ['forum', 'user']
     search_fields = ['title']
