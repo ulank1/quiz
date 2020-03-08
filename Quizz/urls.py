@@ -59,6 +59,7 @@ router.register(r'my_friend', MyFriendViewSet)
 router.register(r'search_users', SearchUsersForDuelViewSet)
 router.register(r'forum', ForumViewSet)
 router.register(r'topic', TopicViewSet)
+router.register(r'topic_create', TopicViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),

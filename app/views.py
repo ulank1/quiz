@@ -666,3 +666,10 @@ class TopicViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ['forum', 'user']
     search_fields = ['title']
+
+
+class TopicCreateViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicCreateSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+

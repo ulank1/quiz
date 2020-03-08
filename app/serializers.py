@@ -523,8 +523,14 @@ class ForumSerializer(serializers.ModelSerializer):
 
 
 class TopicSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
 
     class Meta:
         model = Topic
         fields = '__all__'
 
+
+class TopicCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = '__all__'
