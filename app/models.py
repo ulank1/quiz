@@ -35,9 +35,6 @@ class Users(models.Model):
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
 
-    def __str__(self):
-        return self.name
-
 
 class Test(models.Model):
     class Meta:
