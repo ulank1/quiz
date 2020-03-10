@@ -23,8 +23,6 @@ admin.site.register(CommentForum)
 admin.site.register(AnswerToCommentForum)
 admin.site.register(LikeAnswerForum)
 admin.site.register(LikeForum)
-admin.site.register(Forum)
-admin.site.register(Topic)
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -240,3 +238,28 @@ class RatingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Rating, RatingAdmin)
+
+
+class ForumAdmin(admin.ModelAdmin):
+
+    class Meta:
+        model = Forum
+
+    list_display = ('title', 'created_at', 'lang')
+
+
+admin.site.register(Forum, ForumAdmin)
+
+
+class TopicAdmin(admin.ModelAdmin):
+
+    class Meta:
+        model = Topic
+
+    list_display = ('title', 'created_at', 'display_forum_title')
+
+    def display_forum_title(self, obj):
+        return obj.forum.title
+
+
+admin.site.register(Topic, TopicAdmin)
