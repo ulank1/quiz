@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from random import randrange
 
 from django.db.models import Q
@@ -666,6 +666,9 @@ class TopicViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ['forum', 'user']
     search_fields = ['title']
+
+    def get_queryset(self):
+        print(date.today())
 
 
 class TopicCreateViewSet(viewsets.ModelViewSet):

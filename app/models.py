@@ -440,9 +440,6 @@ class Forum(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True, default=True)
 
-    def __str__(self):
-        return self.title
-
 
 class Topic(models.Model):
     class Meta:
@@ -474,9 +471,6 @@ class CommentForum(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     message = models.CharField(max_length=500, blank=True, null=True)
 
-    def __str__(self):
-        return self.message
-
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         super().save()
@@ -494,9 +488,6 @@ class AnswerToCommentForum(models.Model):
     comment = models.ForeignKey(CommentForum, on_delete=models.CASCADE, related_name='answer')
     name = models.CharField(max_length=100, blank=True, null=True)
     message = models.CharField(max_length=500, blank=True, null=True)
-
-    def __str__(self):
-        return self.message
 
 
 class LikeForum(models.Model):
