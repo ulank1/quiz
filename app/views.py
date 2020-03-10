@@ -667,9 +667,6 @@ class TopicViewSet(viewsets.ModelViewSet):
     filterset_fields = ['forum', 'user']
     search_fields = ['title']
 
-    def get_queryset(self):
-        print(date.today())
-
 
 class TopicCreateViewSet(viewsets.ModelViewSet):
     queryset = Topic1.objects.all()
