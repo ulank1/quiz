@@ -456,7 +456,7 @@ class Topic(models.Model):
     comment_count = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
-        return "dds"
+        return str(self.title)
 
 
 class CommentForum(models.Model):
