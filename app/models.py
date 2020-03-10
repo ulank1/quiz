@@ -455,9 +455,6 @@ class Topic(models.Model):
     is_active = models.BooleanField(null=True, blank=True, default=True)
     comment_count = models.IntegerField(null=True, blank=True, default=0)
 
-    def __str__(self):
-        return str(self.title)
-
 
 class CommentForum(models.Model):
     class Meta:
