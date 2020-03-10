@@ -238,7 +238,7 @@ class UniversitySubCategoryViewSet(viewsets.ModelViewSet):
 
 
 class NewsViewSet(viewsets.ModelViewSet):
-    queryset = News.objects.order_by('created_at')
+    queryset = News.objects.order_by('-created_at')
     serializer_class = NewsSerializer
     filter_backends = [DjangoFilterBackend]
 
