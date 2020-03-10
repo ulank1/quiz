@@ -526,11 +526,11 @@ class TopicSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
-        model = Topic
+        model = Topic1
         fields = '__all__'
 
 
 class TopicCreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Topic
+        model = Topic1
         fields = '__all__'

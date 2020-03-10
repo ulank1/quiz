@@ -660,7 +660,7 @@ class ForumViewSet(viewsets.ModelViewSet):
 
 
 class TopicViewSet(viewsets.ModelViewSet):
-    queryset = Topic.objects.order_by("-comment_count")
+    queryset = Topic1.objects.order_by("-comment_count")
     serializer_class = TopicSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
@@ -672,7 +672,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 class TopicCreateViewSet(viewsets.ModelViewSet):
-    queryset = Topic.objects.all()
+    queryset = Topic1.objects.all()
     serializer_class = TopicCreateSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 

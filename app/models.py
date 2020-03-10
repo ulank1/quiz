@@ -456,13 +456,28 @@ class Topic(models.Model):
     comment_count = models.IntegerField(null=True, blank=True, default=0)
 
 
+class Topic1(models.Model):
+    class Meta:
+        verbose_name_plural = "Тема форума"
+        verbose_name = "Тема форума"
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='topic1', null=True, blank=True)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='topic1', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to=image_upload_to, null=True, blank=True, verbose_name='картинка')
+    is_active = models.BooleanField(null=True, blank=True, default=True)
+    comment_count = models.IntegerField(null=True, blank=True, default=0)
+
+
 class CommentForum(models.Model):
     class Meta:
         verbose_name = "Коментарий к Форуму"
         verbose_name_plural = "Коментарии к Форуму"
 
     topic = models.ForeignKey(
-        Topic,
+        Topic1,
         on_delete=models.CASCADE,
         related_name='comment'
     )

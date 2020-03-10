@@ -254,7 +254,7 @@ admin.site.register(Forum, ForumAdmin)
 class TopicAdmin(admin.ModelAdmin):
 
     class Meta:
-        model = Topic
+        model = Topic1
 
     list_display = ('title', 'created_at', 'display_forum_title')
 
@@ -262,4 +262,4 @@ class TopicAdmin(admin.ModelAdmin):
         return obj.forum.title
 
 
-admin.site.register(Topic, TopicAdmin)
+admin.site.register(Topic1, TopicAdmin)
