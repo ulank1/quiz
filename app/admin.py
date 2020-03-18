@@ -263,3 +263,33 @@ class TopicAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Topic1, TopicAdmin)
+
+
+class CommentForumAdmin(admin.ModelAdmin):
+    list_filter = ['message', ]
+
+    class Meta:
+        model = CommentForum
+
+    list_display = ("message", "display_user_name", 'created_at')
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(CommentForum, CommentForumAdmin)
+
+
+class AnswerForumAdmin(admin.ModelAdmin):
+    list_filter = ['message', ]
+
+    class Meta:
+        model = AnswerToCommentForum
+
+    list_display = ("message", "display_user_name", 'created_at')
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(AnswerToCommentForum, AnswerForumAdmin)
