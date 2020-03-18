@@ -19,8 +19,6 @@ admin.site.register(CommentQuestion)
 admin.site.register(AnswerToComment)
 admin.site.register(LikeQuiz)
 admin.site.register(LikeAnswerQuiz)
-admin.site.register(CommentForum)
-admin.site.register(AnswerToCommentForum)
 admin.site.register(LikeAnswerForum)
 admin.site.register(LikeForum)
 
