@@ -264,7 +264,7 @@ admin.site.register(Topic1, TopicAdmin)
 
 
 class CommentForumAdmin(admin.ModelAdmin):
-    list_filter = ['message', ]
+    search_fields = ['message', ]
 
     class Meta:
         model = CommentForum
@@ -279,7 +279,7 @@ admin.site.register(CommentForum, CommentForumAdmin)
 
 
 class AnswerForumAdmin(admin.ModelAdmin):
-    list_filter = ['message', ]
+    search_fields = ['message', ]
 
     class Meta:
         model = AnswerToCommentForum
