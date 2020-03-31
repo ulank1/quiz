@@ -26,6 +26,7 @@ admin.site.register(LikeForum)
 class UsersAdmin(admin.ModelAdmin):
     model = Users
     search_fields = ('name',)
+    list_display = ("name", "login")
 
 
 admin.site.register(Users, UsersAdmin)
