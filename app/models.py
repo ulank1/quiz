@@ -517,3 +517,113 @@ class LikeAnswerForum(models.Model):
     answer = models.ForeignKey(AnswerToCommentForum, on_delete=models.CASCADE, related_name='like_answer_forum',
                                null=True,
                                blank=True)
+
+
+class PayOrt(models.Model):
+    class Meta:
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплаты'
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='pay', null=True, blank=True)
+    is_used = models.BooleanField(default=False, null=True, blank=True, verbose_name="использовано?")
+    used_time = models.DateTimeField(null=True, blank=True)
+
+
+class CategoryOrt(models.Model):
+    class Meta:
+        verbose_name = 'Название пробного теста'
+        verbose_name_plural = 'Названии пробного теста'
+
+    title = models.CharField(max_length=255, null=True, blank=True)
+    lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
+
+
+class Math1Ort(models.Model):
+    class Meta:
+        verbose_name = 'Пробный тест (Математика1)'
+        verbose_name_plural = 'Пробные тесты (Математика1)'
+
+    category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='math1',
+                                 on_delete=models.CASCADE)
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+
+
+class Math2Ort(models.Model):
+    class Meta:
+        verbose_name = 'Пробный тест (Математика2)'
+        verbose_name_plural = 'Пробные тесты (Математика2)'
+
+    category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='math2',
+                                 on_delete=models.CASCADE)
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+
+
+class AnalogOrt(models.Model):
+    class Meta:
+        verbose_name = 'Пробный тест (Аналогии)'
+        verbose_name_plural = 'Пробные тесты (Аналогии)'
+
+    category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='analog',
+                                 on_delete=models.CASCADE)
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+
+
+class UnderstandOrt(models.Model):
+    class Meta:
+        verbose_name = 'Пробный тест (Чтение и понимание)'
+        verbose_name_plural = 'Пробные тесты (Чтение и понимание)'
+
+    category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='understand',
+                                 on_delete=models.CASCADE)
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+
+
+class GrammarOrt(models.Model):
+    class Meta:
+        verbose_name = 'Пробный тест (Грамматика)'
+        verbose_name_plural = 'Пробные тесты (Грамматика)'
+
+    category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='grammar',
+                                 on_delete=models.CASCADE)
+    question = models.TextField(null=True, blank=True, verbose_name='вопрос')
+    answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
+    answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
+    answer_c = models.TextField(null=True, blank=True, verbose_name='ответ_в')
+    answer_d = models.TextField(null=True, blank=True, verbose_name='ответ_г')
+    answer_e = models.TextField(null=True, blank=True, verbose_name='ответ_д')
+    true_answer = models.CharField(max_length=1, verbose_name="правильный ответ")
+
+
+class PointsOrt(models.Model):
+    class Meta:
+        verbose_name = 'Балл пробного теста'
+        verbose_name_plural = 'Баллы пробного теста'
+
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='ort', null=True, blank=True)
+    point = models.IntegerField(null=True, blank=True)

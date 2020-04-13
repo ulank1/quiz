@@ -534,3 +534,51 @@ class TopicCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic1
         fields = '__all__'
+
+
+class CategoryOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryOrt
+        fields = '__all__'
+
+
+class PayOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayOrt
+        fields = '__all__'
+
+
+class Math1OrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Math1Ort
+        fields = '__all__'
+
+
+class Math2OrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Math2Ort
+        fields = '__all__'
+
+
+class AnalogOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AnalogOrt
+        fields = '__all__'
+
+
+class UnderstandOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnderstandOrt
+        fields = '__all__'
+
+
+class GrammarOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GrammarOrt
+        fields = '__all__'
+
+
+class PointsOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PointsOrt
+        fields = '__all__'

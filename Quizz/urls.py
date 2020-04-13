@@ -60,6 +60,14 @@ router.register(r'search_users', SearchUsersForDuelViewSet)
 router.register(r'forum', ForumViewSet)
 router.register(r'topic', TopicViewSet)
 router.register(r'topic_create', TopicCreateViewSet)
+router.register(r'math1', Math1OrtViewSet)
+router.register(r'math2', Math2OrtViewSet)
+router.register(r'analog', AnalogOrtViewSet)
+router.register(r'understand', UnderstandOrtViewSet)
+router.register(r'grammar', GrammarOrtViewSet)
+router.register(r'pay', PayOrtViewSet)
+router.register(r'point_ort', PointsOrtOrtViewSet)
+router.register(r'category_ort', CategoryOrtViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),

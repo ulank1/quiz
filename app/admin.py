@@ -45,6 +45,9 @@ class InfoAdmin(admin.ModelAdmin):
     form = InfoAdminForm
     model = Info
 
+    class Meta:
+        app_label = 'asdf'
+
 
 admin.site.register(Info, InfoAdmin)
 
@@ -240,7 +243,6 @@ admin.site.register(Rating, RatingAdmin)
 
 
 class ForumAdmin(admin.ModelAdmin):
-
     class Meta:
         model = Forum
 
@@ -251,7 +253,6 @@ admin.site.register(Forum, ForumAdmin)
 
 
 class TopicAdmin(admin.ModelAdmin):
-
     class Meta:
         model = Topic1
 
@@ -292,3 +293,121 @@ class AnswerForumAdmin(admin.ModelAdmin):
 
 
 admin.site.register(AnswerToCommentForum, AnswerForumAdmin)
+
+
+class Math1Admin(admin.ModelAdmin):
+    search_fields = ['question', ]
+
+    class Meta:
+        model = Math1Ort
+
+    list_display = ("id", "display_category_title")
+
+    def display_category_title(self, obj):
+        return obj.category.title
+
+
+admin.site.register(Math1Ort, Math1Admin)
+
+
+class Math2Admin(admin.ModelAdmin):
+    search_fields = ['question', ]
+
+    class Meta:
+        model = Math2Ort
+
+    list_display = ("id", "display_category_title")
+
+    def display_category_title(self, obj):
+        return obj.category.title
+
+
+admin.site.register(Math2Ort, Math2Admin)
+
+
+class AnalogAdmin(admin.ModelAdmin):
+    search_fields = ['question', ]
+
+    class Meta:
+        model = AnalogOrt
+
+    list_display = ("id", "display_category_title")
+
+    def display_category_title(self, obj):
+        return obj.category.title
+
+
+admin.site.register(AnalogOrt, AnalogAdmin)
+
+
+class UnderstandAdmin(admin.ModelAdmin):
+    search_fields = ['question', ]
+
+    class Meta:
+        model = UnderstandOrt
+
+    list_display = ("id", "display_category_title")
+
+    def display_category_title(self, obj):
+        return obj.category.title
+
+
+admin.site.register(UnderstandOrt, UnderstandAdmin)
+
+
+class GrammarAdmin(admin.ModelAdmin):
+    search_fields = ['question', ]
+
+    class Meta:
+        model = GrammarOrt
+
+    list_display = ("id", "display_category_title")
+
+    def display_category_title(self, obj):
+        return obj.category.title
+
+
+admin.site.register(GrammarOrt, GrammarAdmin)
+
+
+class PayAdmin(admin.ModelAdmin):
+    filter_fields = ['is_used', ]
+
+    class Meta:
+        model = PayOrt
+
+    list_display = ("is_used", "display_user_name")
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(PayOrt, PayAdmin)
+
+
+class CategoryOrtAdmin(admin.ModelAdmin):
+
+    class Meta:
+        model = CategoryOrt
+
+    list_display = ("title", "lang")
+
+
+admin.site.register(CategoryOrt, CategoryOrtAdmin)
+
+
+class PointsOrtAdmin(admin.ModelAdmin):
+    filter_fields = ("point",)
+    search_fields = ['user', ]
+
+    class Meta:
+        model = PointsOrt
+
+    list_display = ("point", "display_user_name")
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(PointsOrt, PointsOrtAdmin)
+

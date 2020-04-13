@@ -673,3 +673,66 @@ class TopicCreateViewSet(viewsets.ModelViewSet):
     serializer_class = TopicCreateSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
+
+class CategoryOrtViewSet(viewsets.ModelViewSet):
+    queryset = CategoryOrt.objects.all()
+    serializer_class = CategoryOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'lang']
+
+
+class PayOrtViewSet(viewsets.ModelViewSet):
+    queryset = PayOrt.objects.all()
+    serializer_class = PayOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'is_used', 'user', 'used_time']
+
+
+class Math1OrtViewSet(viewsets.ModelViewSet):
+    queryset = Math1Ort.objects.all()
+    serializer_class = Math1OrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'category']
+
+
+class Math2OrtViewSet(viewsets.ModelViewSet):
+    queryset = Math2Ort.objects.all()
+    serializer_class = Math2OrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'category']
+
+
+class AnalogOrtViewSet(viewsets.ModelViewSet):
+    queryset = AnalogOrt.objects.all()
+    serializer_class = AnalogOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'category']
+
+
+class UnderstandOrtViewSet(viewsets.ModelViewSet):
+    queryset = UnderstandOrt.objects.all()
+    serializer_class = UnderstandOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'category']
+
+
+class GrammarOrtViewSet(viewsets.ModelViewSet):
+    queryset = GrammarOrt.objects.all()
+    serializer_class = GrammarOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'category']
+
+
+class PointsOrtOrtViewSet(viewsets.ModelViewSet):
+    queryset = PointsOrt.objects.all()
+    serializer_class = PointsOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'user']
