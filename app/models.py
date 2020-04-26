@@ -10,6 +10,8 @@ def image_upload_to(instance, filename):
 
 
 LANG_CHOICES = ((1, 'KG'), (2, 'RU'))
+ORT_DESC_CHOICES = (
+(0, 'Математика 1'), (1, 'Математика 2'), (2, 'Аналогия'), (3, 'Чтение и понимание'), (4, 'Грамматика'), (5, 'Общее'))
 LIKE_CHOICES = ((0, "No"), (1, 'Like'), (2, 'UnLike'))
 
 
@@ -627,3 +629,15 @@ class PointsOrt(models.Model):
     created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='ort', null=True, blank=True)
     point = models.IntegerField(null=True, blank=True)
+
+
+class DescOrt(models.Model):
+    class Meta:
+        verbose_name = 'Информация об Орт'
+        verbose_name_plural = 'Информации об Орт'
+
+    lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
+    category = models.IntegerField(choices=ORT_DESC_CHOICES, null=True, blank=True)
+    desc = models.TextField(null=True, blank=True, verbose_name="Описание")
+    title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Название")
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)

@@ -411,3 +411,19 @@ class PointsOrtAdmin(admin.ModelAdmin):
 
 admin.site.register(PointsOrt, PointsOrtAdmin)
 
+
+class DescOrtAdminForm(forms.ModelForm):
+    class Meta:
+        model = DescOrt
+        widgets = {
+            'desc': SummernoteWidget(),
+        }
+        fields = '__all__'
+
+
+class DescOrtAdmin(admin.ModelAdmin):
+    form = DescOrtAdminForm
+    model = DescOrt
+
+
+admin.site.register(DescOrt, DescOrtAdmin)

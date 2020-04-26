@@ -68,6 +68,7 @@ router.register(r'grammar', GrammarOrtViewSet)
 router.register(r'pay', PayOrtViewSet)
 router.register(r'point_ort', PointsOrtOrtViewSet)
 router.register(r'category_ort', CategoryOrtViewSet)
+router.register(r'desc_ort', DescOrtViewSet)
 urlpatterns = [
                   url(r'^jet/', include('jet.urls', 'jet')),
                   url(r'^summernote/', include('django_summernote.urls')),

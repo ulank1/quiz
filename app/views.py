@@ -736,3 +736,11 @@ class PointsOrtOrtViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['id', 'user']
+
+
+class DescOrtViewSet(viewsets.ModelViewSet):
+    queryset = DescOrt.objects.all()
+    serializer_class = DescOrtSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['id', 'lang', 'category']

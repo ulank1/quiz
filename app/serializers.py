@@ -582,3 +582,9 @@ class PointsOrtSerializer(serializers.ModelSerializer):
     class Meta:
         model = PointsOrt
         fields = '__all__'
+
+
+class DescOrtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DescOrt
+        fields = '__all__'
