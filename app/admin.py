@@ -316,7 +316,7 @@ class Math1Admin(admin.ModelAdmin):
     class Meta:
         model = Math1Ort
 
-    list_display = ("id", "display_category_title")
+    list_display = ("id", "display_category_title", "type_of_test")
 
     def display_category_title(self, obj):
         return obj.category.title

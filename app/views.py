@@ -695,7 +695,7 @@ class Math1OrtViewSet(viewsets.ModelViewSet):
     serializer_class = Math1OrtSerializer
     filter_backends = [DjangoFilterBackend]
 
-    filterset_fields = ['id', 'category']
+    filterset_fields = ['id', 'category', 'type_of_test']
 
 
 class Math2OrtViewSet(viewsets.ModelViewSet):
