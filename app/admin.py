@@ -295,8 +295,23 @@ class AnswerForumAdmin(admin.ModelAdmin):
 admin.site.register(AnswerToCommentForum, AnswerForumAdmin)
 
 
+class Math1AdminForm(forms.ModelForm):
+    class Meta:
+        model = GameQuiz
+        widgets = {
+            'question': SummernoteWidget(),
+            'answer_a': SummernoteWidget(),
+            'answer_b': SummernoteWidget(),
+            'answer_c': SummernoteWidget(),
+            'answer_d': SummernoteWidget(),
+            'answer_e': SummernoteWidget(),
+        }
+        fields = '__all__'
+
+
 class Math1Admin(admin.ModelAdmin):
     search_fields = ['question', ]
+    form = DayQuizAdminForm
 
     class Meta:
         model = Math1Ort
@@ -308,66 +323,6 @@ class Math1Admin(admin.ModelAdmin):
 
 
 admin.site.register(Math1Ort, Math1Admin)
-
-
-class Math2Admin(admin.ModelAdmin):
-    search_fields = ['question', ]
-
-    class Meta:
-        model = Math2Ort
-
-    list_display = ("id", "display_category_title")
-
-    def display_category_title(self, obj):
-        return obj.category.title
-
-
-admin.site.register(Math2Ort, Math2Admin)
-
-
-class AnalogAdmin(admin.ModelAdmin):
-    search_fields = ['question', ]
-
-    class Meta:
-        model = AnalogOrt
-
-    list_display = ("id", "display_category_title")
-
-    def display_category_title(self, obj):
-        return obj.category.title
-
-
-admin.site.register(AnalogOrt, AnalogAdmin)
-
-
-class UnderstandAdmin(admin.ModelAdmin):
-    search_fields = ['question', ]
-
-    class Meta:
-        model = UnderstandOrt
-
-    list_display = ("id", "display_category_title")
-
-    def display_category_title(self, obj):
-        return obj.category.title
-
-
-admin.site.register(UnderstandOrt, UnderstandAdmin)
-
-
-class GrammarAdmin(admin.ModelAdmin):
-    search_fields = ['question', ]
-
-    class Meta:
-        model = GrammarOrt
-
-    list_display = ("id", "display_category_title")
-
-    def display_category_title(self, obj):
-        return obj.category.title
-
-
-admin.site.register(GrammarOrt, GrammarAdmin)
 
 
 class PayAdmin(admin.ModelAdmin):
