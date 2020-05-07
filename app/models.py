@@ -11,9 +11,10 @@ def image_upload_to(instance, filename):
 
 LANG_CHOICES = ((1, 'KG'), (2, 'RU'))
 ORT_DESC_CHOICES = (
-(0, 'Математика 1'), (1, 'Математика 2'), (2, 'Аналогия'), (3, 'Чтение и понимание'), (4, 'Грамматика'), (5, 'Общее'))
+    (0, 'Математика 1'), (1, 'Математика 2'), (2, 'Аналогия'), (3, 'Чтение и понимание'), (4, 'Грамматика'),
+    (5, 'Общее'))
 ORT_TEST_CHOICES = (
-(0, 'Математика 1'), (1, 'Математика 2'), (2, 'Аналогия'), (3, 'Чтение и понимание'), (4, 'Грамматика'))
+    (0, 'Математика 1'), (1, 'Математика 2'), (2, 'Аналогия'), (3, 'Чтение и понимание'), (4, 'Грамматика'))
 LIKE_CHOICES = ((0, "No"), (1, 'Like'), (2, 'UnLike'))
 
 
@@ -539,6 +540,9 @@ class CategoryOrt(models.Model):
         verbose_name = 'Название пробного теста'
         verbose_name_plural = 'Названии пробного теста'
 
+    text1 = models.TextField(null=True, blank=True, verbose_name="текст для чтения и понимания №1")
+    text2 = models.TextField(null=True, blank=True, verbose_name="текст для чтения и понимания №2")
+    text3 = models.TextField(null=True, blank=True, verbose_name="текст для чтения и понимания №3")
     title = models.CharField(max_length=255, null=True, blank=True)
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
 
@@ -550,7 +554,7 @@ class Math1Ort(models.Model):
 
     category = models.ForeignKey('CategoryOrt', verbose_name='название пробного теста', related_name='math1',
                                  on_delete=models.CASCADE)
-    type_of_test = models.IntegerField(choices=ORT_TEST_CHOICES,null=True,blank=True)
+    type_of_test = models.IntegerField(choices=ORT_TEST_CHOICES, null=True, blank=True)
     question = models.TextField(null=True, blank=True, verbose_name='вопрос')
     answer_a = models.TextField(null=True, blank=True, verbose_name='ответ_а')
     answer_b = models.TextField(null=True, blank=True, verbose_name='ответ_б')
