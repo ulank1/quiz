@@ -649,5 +649,5 @@ class DescOrt(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True, verbose_name="Название")
     created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
