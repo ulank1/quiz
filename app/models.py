@@ -40,7 +40,7 @@ class Users(models.Model):
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
     def __str__(self):
-        return str(self.login)
+        return str(self.name)
 
 
 class Test(models.Model):
