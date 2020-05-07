@@ -39,7 +39,8 @@ class Users(models.Model):
     is_admin = models.BooleanField(default=False, null=True, blank=True)
 
     # rating = models.IntegerField(max_length=100, null=True, blank=True, verbose_name='рейтинг')
-
+    def __str__(self):
+        return self.name
 
 class Test(models.Model):
     class Meta:
