@@ -340,7 +340,19 @@ class PayAdmin(admin.ModelAdmin):
 admin.site.register(PayOrt, PayAdmin)
 
 
+class CategoryOrtAdminForm(forms.ModelForm):
+    class Meta:
+        model = CategoryOrt
+        widgets = {
+            'text1': SummernoteWidget(),
+            'text2': SummernoteWidget(),
+            'text3': SummernoteWidget(),
+        }
+        fields = '__all__'
+
+
 class CategoryOrtAdmin(admin.ModelAdmin):
+    form = CategoryOrtAdminForm
 
     class Meta:
         model = CategoryOrt

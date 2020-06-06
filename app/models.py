@@ -638,6 +638,11 @@ class PointsOrt(models.Model):
     created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='ort', null=True, blank=True)
     point = models.IntegerField(null=True, blank=True)
+    math1 = models.IntegerField(null=True, blank=True)
+    math2 = models.IntegerField(null=True, blank=True)
+    analog = models.IntegerField(null=True, blank=True)
+    understand = models.IntegerField(null=True, blank=True)
+    grammar = models.IntegerField(null=True, blank=True)
 
 
 class DescOrt(models.Model):
