@@ -537,9 +537,14 @@ class TopicCreateSerializer(serializers.ModelSerializer):
 
 
 class CategoryOrtSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+
     class Meta:
         model = CategoryOrt
         fields = '__all__'
+
+    def get_status(self, obj):
+        return obj.ort.count()
 
 
 class PayOrtSerializer(serializers.ModelSerializer):
@@ -579,6 +584,7 @@ class GrammarOrtSerializer(serializers.ModelSerializer):
 
 
 class PointsOrtSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = PointsOrt
         fields = '__all__'
