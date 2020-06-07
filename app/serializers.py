@@ -544,7 +544,8 @@ class CategoryOrtSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_status(self, obj):
-        return obj.ort.count()
+        request = self.context['request']
+        return obj.ort.filter(user=request.GET.get('user_id')).count()
 
 
 class PayOrtSerializer(serializers.ModelSerializer):
