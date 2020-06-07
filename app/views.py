@@ -744,3 +744,11 @@ class DescOrtViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['id', 'lang', 'category']
+
+
+class PayInfoViewSet(viewsets.ModelViewSet):
+    queryset = PayInfo.objects.all()
+    serializer_class = PayInfoSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['lang', 'desc']

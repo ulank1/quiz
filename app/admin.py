@@ -363,6 +363,27 @@ class CategoryOrtAdmin(admin.ModelAdmin):
 admin.site.register(CategoryOrt, CategoryOrtAdmin)
 
 
+class PayInfoAdminForm(forms.ModelForm):
+    class Meta:
+        model = PayInfo
+        widgets = {
+            'desc': SummernoteWidget(),
+        }
+        fields = '__all__'
+
+
+class PayInfoAdmin(admin.ModelAdmin):
+    form = PayInfoAdminForm
+
+    class Meta:
+        model = PayInfo
+
+    list_display = ("desc", "lang")
+
+
+admin.site.register(CategoryOrt, CategoryOrtAdmin)
+
+
 class PointsOrtAdmin(admin.ModelAdmin):
     filter_fields = ("point",)
     search_fields = ['user', ]

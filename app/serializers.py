@@ -595,3 +595,9 @@ class DescOrtSerializer(serializers.ModelSerializer):
     class Meta:
         model = DescOrt
         fields = '__all__'
+
+
+class PayInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayInfo
+        fields = '__all__'

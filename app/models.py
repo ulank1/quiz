@@ -659,3 +659,16 @@ class DescOrt(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PayInfo(models.Model):
+    class Meta:
+        verbose_name = 'Информация об Оплате'
+        verbose_name_plural = 'Информации об Оплате'
+
+    lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
+    desc = models.TextField(null=True, blank=True, verbose_name="Описание")
+    created_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+
+    def __str__(self):
+        return self.desc
