@@ -381,7 +381,7 @@ class PayInfoAdmin(admin.ModelAdmin):
     list_display = ("desc", "lang")
 
 
-admin.site.register(CategoryOrt, CategoryOrtAdmin)
+admin.site.register(PayInfo, PayInfoAdmin)
 
 
 class PointsOrtAdmin(admin.ModelAdmin):
