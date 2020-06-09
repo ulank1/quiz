@@ -548,6 +548,9 @@ class CategoryOrt(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
     lang = models.IntegerField(choices=LANG_CHOICES, null=True, blank=True)
 
+    def __str__(self):
+        return str(self.title)
+
 
 class Math1Ort(models.Model):
     class Meta:
