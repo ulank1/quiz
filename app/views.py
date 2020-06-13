@@ -739,7 +739,7 @@ class PointsOrtOrtViewSet(viewsets.ModelViewSet):
 
 
 class PointsOrtOrtGetViewSet(viewsets.ModelViewSet):
-    queryset = PointsOrt.objects.all()
+    queryset = PointsOrt.objects.order_by("-id")
     serializer_class = PointsOrtGETSerializer
     filter_backends = [DjangoFilterBackend]
 
