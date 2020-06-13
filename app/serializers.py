@@ -591,6 +591,14 @@ class PointsOrtSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PointsOrtGETSerializer(serializers.ModelSerializer):
+    category = CategoryOrtSerializer()
+
+    class Meta:
+        model = PointsOrt
+        fields = '__all__'
+
+
 class DescOrtSerializer(serializers.ModelSerializer):
     class Meta:
         model = DescOrt
